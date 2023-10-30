@@ -5,19 +5,33 @@ import SearchInput from './SearchInput'; // Import the SearchInput component
 
 const customStyles = {
   content: {
-    top: '0', // Position from the top
-    right: '0', // Position from the right
-    bottom: '0', // Position from the bottom
-    left: 'auto', // Do not specify 'left' to ensure it's on the right
+    top: '0', 
+    right: '0', 
+    bottom: '0', 
+    left: 'auto', 
   },
 };
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = {
+    userPic: './images/userPic.jpg',
+    connect:true,
+    userName: 'John Doe',
+    userNameLink:'google.com',
+    userDescription: 'Frontend Developer',
+    hasNotifications: true,
+    notificationCount: 3,
+    onOptionsClick: () => {
+      // Handle options click
+    },
+  };
 
 
   return (
-    <header className="flex items-center justify-between p-4 bg-gray-900 ">
+    
+    
+    <header className="flex items-center justify-between bg-gray-500  ">
+      
 
        {/* Right side of the header */}
        <div className="flex items-center">
@@ -25,7 +39,7 @@ const Header = () => {
       </div>
       {/* Left side of the header */}
       <div className="flex items-center">
-        <UserNotifications /> {/* Render UserNotifications component */}
+      <UserNotifications {...user} />{/* Render UserNotifications component */}
       </div>
 
      
