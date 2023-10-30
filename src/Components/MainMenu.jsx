@@ -1,6 +1,11 @@
+import React from "react";
+import Settings from "./Settings.jsx";
+import Info from "./info.jsx";
 
-export default function MainManue() {
+export default function MainMenu() {
   return (
-    <div>MainManue</div>
-  )
+    <div >
+      <Settings />
+      <Info />
+    </div> )
 }
