@@ -1,14 +1,14 @@
-import { useState } from 'react'
+// App.js
 
-import './App.css'
+import React from 'react';
+import LayoutComponent from './Components/LayoutComponent';
 
 function App() {
-
   return (
-    <>
-
-    </>
-  )
+    <div className="flex">
+      <LayoutComponent />
+    </div>
+  );
 }
 
-export default App
+export default App;
