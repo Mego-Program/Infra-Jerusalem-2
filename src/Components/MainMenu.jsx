@@ -1,18 +1,9 @@
-import Dashboard from './Dashboard.jsx'
-// import Projects from './Projects.jsx'
-// import Board from './Board.jsx'
-// import Add_User from './Add_User.jsx'
-// import Messages from './Messages.jsx'
-
+import Header from './Header.jsx'
 
 export default function MainMenu() {
   return (
-    <div>
-      <Dashboard/>
-      {/* <Projects/>
-      <Board/>
-      <Add_User/>
-      <Messages/> */}
+<div className='bg-deep-indigo h-screen pt-138.5'>
+        <Header />
     </div>
   )
 }

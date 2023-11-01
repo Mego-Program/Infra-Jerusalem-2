@@ -12,7 +12,21 @@ export default {
         'deep-indigo' : '#121231',
         'dark-midnight-navy-blue': '#0A0A1B',
       },
+      width:{
+        '91.1':'91.1%',
+        '100':'100%',
+      },
+      height:{
+        '5':'5%',
+        '100':'100%',
+      },
+      spacing: {
+        '15': '15%',
+        '138.5':'138.5px',
+      },
+
     },
   },
   plugins: [],
 }
+
