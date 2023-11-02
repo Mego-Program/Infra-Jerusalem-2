@@ -3,14 +3,6 @@ import Modal from 'react-modal';
 import UserNotifications from './UserNotifications'; // Import the UserNotifications component
 import SearchInput from './SearchInput'; // Import the SearchInput component
 
-const customStyles = {
-  content: {
-    top: '0', 
-    right: '0', 
-    bottom: '0', 
-    left: 'auto', 
-  },
-};
 
 const Header = () => {
   const user = {
