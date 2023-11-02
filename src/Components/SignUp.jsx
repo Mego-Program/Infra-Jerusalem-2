@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState,useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -32,15 +31,16 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [token, setToken] = useState(null);
-
+  const [token, setToken] = useState('');
 
   const handleSubmit = async  (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const response = await axios.post('/SingUp', {name: data.get('firstName') +' '+ data.get('lastName'),email: data.get('email'), password: data.get('password') });
+      const response = await axios.post('http://localhost:3000/signup', {name: data.get('firstName') +' '+ data.get('lastName'), password: data.get('password') ,email: data.get('email')});
+      console.log(response.data.token)
       setToken(response.data.token);
+      localStorage.setItem('token',response.data.token)
     } catch (error) {
       console.error(error);
     }

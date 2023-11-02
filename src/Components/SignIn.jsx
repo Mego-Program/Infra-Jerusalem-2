@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, { useState,useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import axios from 'axios';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,17 +27,21 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const [token, setToken] = useState(null);
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-        const response = await axios.post('/SingIn', {email: data.get('email'), password: data.get('password') });
+        const response = await axios.post('http://localhost:3000/signin', {email: data.get('email'), password: data.get('password') });
+        console.log(response)
         setToken(response.data.token);
+        localStorage.setItem('token',response.data.token)
+        
       } catch (error) {
         console.error(error);
       }
