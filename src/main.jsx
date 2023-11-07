@@ -12,7 +12,7 @@ import "@fontsource/roboto/700.css";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#F6C927",
+      main: "#21213E",
     },
     secondary: {
       main: "#0A0A1B",
