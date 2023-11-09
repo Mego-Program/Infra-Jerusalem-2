@@ -9,23 +9,24 @@ import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import BadgeAvatars from "./BadgeAvatars";
 
 // Styling for the search bar
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
+  borderRadius:10,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(6),
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(),
     width: "auto",
   },
 }));
@@ -63,6 +64,8 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static">
         {/* Toolbar containing various components */}
         <Toolbar>
+          {/* Box to grow and push the search bar and profile info to the right */}
+          <Box sx={{ flexGrow: 1 }} />
           {/* Search bar component */}
           <Search>
             <SearchIconWrapper>
@@ -74,7 +77,7 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
 
-          <Box sx={{ flexGrow: 1 }} />
+          {/* <Box sx={{ flexGrow: 1 }} /> //not in use so the search bar will move to the right */ }
           <Box
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
@@ -82,46 +85,50 @@ export default function PrimarySearchAppBar() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                marginRight: 1,
+                marginRight: 0,
+                marginTop: 2,
                 backgroundColor: "#121231",
-                borderRadius: '10px',
-                padding: 1,
+                borderRadius: "10px",
+                padding: 0,
               }}
             >
               <Box
-                sx={{ display: "flex", alignItems: "center", marginRight: 1 }}
+                sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
               >
-                <Avatar
-                  // alt="User Image"
-                  src="D2.jpg" // Ensure the image path is correct
-                  sx={{
-                    width: 49,
-                    height: 49,
-                    borderRadius: "50%",
-                    marginRight: 3,
-                  }}
-                />
+                <BadgeAvatars />
+                {/* Name and job title */}
                 <Box>
-                  <Typography variant="body2"  sx={{ color: "white", mb: 0. }}>
-                 <b> Emma Taylor </b>
+                  <Typography variant="body2" sx={{ color: "white", mb: 0 }}>
+                    {/* get from server */}
+                    <b> Emma Taylor </b>
                   </Typography>
-                  <Typography
-                    variant="caption"
-                    sx={{ color: "white", mb: 0 }}
-                  >
+                  <Typography variant="caption" sx={{ color: "white", mb: 0 }}>
+                    {/* get from server */}
                     UX/UI Designer
                   </Typography>
                 </Box>
               </Box>
-
-              <IconButton size="large" aria-label="10" color="inherit">
+              {/* Notifaction Icon */}
+              <IconButton
+                size="large"
+                aria-label="10"
+                color="inherit"
+                sx={{ bgcolor: "#21213E" }}
+              >
                 <Badge badgeContent={10} color="error">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <Box width={45} height={45} ml={4}>
-                <MoreHorizIcon />
-              </Box>
+
+                {/* 3 dot icon */}
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  sx={{ bgcolor: "#21213E;", m: "1vh" }}
+                >
+                  <MoreHorizIcon />
+                </IconButton>
+
             </Box>
           </Box>
 
@@ -141,4 +148,3 @@ export default function PrimarySearchAppBar() {
     </Box>
   );
 }
-

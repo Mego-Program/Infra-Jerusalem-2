@@ -6,26 +6,17 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import FeedIcon from "@mui/icons-material/Feed";
-import SpeedIcon from "@mui/icons-material/Speed";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import BrokenImageOutlinedIcon from "@mui/icons-material/BrokenImageOutlined";
-import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
-import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import InfoIcon from "@mui/icons-material/Info";
 import PrimarySearchAppBar from "./PrimarySearchAppBar";
 import Badge from "@mui/material/Badge";
+import { arrIcon, arrIcon2 } from "./Arr_Icons.jsx"; // importing the arrays of icons
 
 const drawerWidth = 240;
 
@@ -36,22 +27,14 @@ function ResponsiveDrawer(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const [selectedButton, setSelectedButton] = React.useState("#21213E;");
 
-  const arrIcon = [
-    <SpeedIcon sx={{ color: "white" }} />,
-    <FeedIcon sx={{ color: "white" }} />,
-    <BrokenImageOutlinedIcon sx={{ color: "white" }} />,
-    <PersonAddAltOutlinedIcon sx={{ color: "white" }} />,
-    // !!!!!!!!!!!!!!!!!!!!!!!! 10 should be reaplaced with use state
-    <Badge badgeContent={10} color="error"> 
-      <ChatOutlinedIcon sx={{ color: "white" }} />
-    </Badge>,
-  ];
-  const arrIcon2 = [
-    <SettingsOutlinedIcon sx={{ color: "white" }} />,
-    <InfoIcon sx={{ color: "white" }} />,
-  ];
+  const [selectedButton, setSelectedButton] = React.useState(null);
+
+  const [badgeNumber, setbadgeNumber] = React.useState(12); //use for Massage ChatOutlinedIcon badge
+  const handleBadge = () => {
+    setbadgeNumber();
+  };
+
   const drawer = (
     <Box
       height={"100%"}
@@ -61,9 +44,7 @@ function ResponsiveDrawer(props) {
       color={"white"}
     >
       <Toolbar sx={{ backgroundColor: "#121231" }} />
-      {/* <Divider /> */}
-      {/* 3vh  is to center the menu */}
-      <List sx={{ flex: 1, marginLeft: "0vh" }}>
+      <List sx={{ flex: 1 }}>
         {["Dashboard", "Projects", "Board", "Add User", "Massage"].map(
           (text, index) => (
             <ListItem key={text}>
@@ -71,8 +52,13 @@ function ResponsiveDrawer(props) {
                 onClick={() => setSelectedButton(index)} // Update the selected button when clicked
                 sx={{
                   backgroundColor:
-                    selectedButton === index ? "#21213E" : "#121231",
-                }} // Change the background color if this is the selected button
+                    selectedButton === index ? "#F6C927" : "#121231",
+                  "&:hover": {
+                    backgroundColor: "#FFE356",
+                    opacity: 0.8,
+                  },
+                  borderRadius: "10px", 
+                }}
               >
                 <ListItemIcon>{arrIcon[index]}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -109,12 +95,12 @@ function ResponsiveDrawer(props) {
       <AppBar
         position="fixed"
         sx={{
-          // bgcolor:'#844561', // *header***default primary****
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
       >
         <Toolbar>
+    {/* the standing 3 dot for mobile */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -124,11 +110,9 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" color="white">
-            SetVariable
+          <Typography variant="h6" noWrap component="div" color="#F6C927">
+            Dashboard 
           </Typography>
-
-          {/* <Avatar ></Avatar> */}
           <PrimarySearchAppBar />
         </Toolbar>
         {/* <PrimarySearchAppBar /> */}
@@ -137,7 +121,6 @@ function ResponsiveDrawer(props) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
@@ -158,14 +141,17 @@ function ResponsiveDrawer(props) {
         >
           {drawer}
         </Drawer>
-
+{/* for Desktop big screen */}
         <Drawer
           variant="permanent"
+          
           sx={{
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              borderRight: 'none'
+              
             },
           }}
           open
