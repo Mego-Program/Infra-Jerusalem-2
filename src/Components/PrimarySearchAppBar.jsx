@@ -1,37 +1,38 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  InputBase,
+  Badge,
+  Typography,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { Avatar, Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import BadgeAvatars from "./BadgeAvatars";
 
-// Styling for the search bar
+// Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius:10,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  borderRadius: 10,
+  backgroundColor: "#121231",
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(6),
+  marginRight: theme.spacing(4.5),
   marginLeft: 0,
-  width: "100%",
+  width: "60%", // Adjust the width as needed
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(),
     width: "auto",
   },
 }));
 
-// Styling for the search icon in the search bar
+// Styled component for the search icon wrapper
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -42,42 +43,41 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-// Styling for the input in the search bar
+// Styled component for the input base
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "100%",
+    width: "100%", // Adjust the width as needed
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "25ch", // Adjust the width as needed
     },
   },
 }));
 
-// Functional component representing the App Bar with search, notifications, and profile
+// Main component for the primary app bar
 export default function PrimarySearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* Creating the app bar */}
-      <AppBar position="static">
-        {/* Toolbar containing various components */}
+      <AppBar position="static" elevation={0}>
         <Toolbar>
-          {/* Box to grow and push the search bar and profile info to the right */}
+          {/* Flex grow for spacing on the left */}
           <Box sx={{ flexGrow: 1 }} />
-          {/* Search bar component */}
+
+          {/* Search bar */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…" // Placeholder text for the search input
+              placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
 
-          {/* <Box sx={{ flexGrow: 1 }} /> //not in use so the search bar will move to the right */ }
+          {/* Desktop view: User profile, notifications, and more */}
           <Box
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
@@ -86,60 +86,41 @@ export default function PrimarySearchAppBar() {
                 display: "flex",
                 alignItems: "center",
                 marginRight: 0,
-                marginTop: 2,
                 backgroundColor: "#121231",
                 borderRadius: "10px",
                 padding: 0,
               }}
             >
-              <Box
-                sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
-              >
+              {/* User profile */}
+              <Box sx={{ display: "flex", alignItems: "center", marginRight: 4 }}>
                 <BadgeAvatars />
-                {/* Name and job title */}
                 <Box>
                   <Typography variant="body2" sx={{ color: "white", mb: 0 }}>
-                    {/* get from server */}
                     <b> Emma Taylor </b>
                   </Typography>
                   <Typography variant="caption" sx={{ color: "white", mb: 0 }}>
-                    {/* get from server */}
                     UX/UI Designer
                   </Typography>
                 </Box>
               </Box>
-              {/* Notifaction Icon */}
-              <IconButton
-                size="large"
-                aria-label="10"
-                color="inherit"
-                sx={{ bgcolor: "#21213E" }}
-              >
+
+              {/* Notifications */}
+              <IconButton size="large" aria-label="10" color="inherit" sx={{ bgcolor: "#21213E" }}>
                 <Badge badgeContent={10} color="error">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
 
-                {/* 3 dot icon */}
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  sx={{ bgcolor: "#21213E;", m: "1vh" }}
-                >
-                  <MoreHorizIcon />
-                </IconButton>
-
+              {/* More options */}
+              <IconButton size="large" color="inherit" sx={{ bgcolor: "#21213E", m: "1vh" }}>
+                <MoreHorizIcon />
+              </IconButton>
             </Box>
           </Box>
 
-          {/* More options icon displayed on smaller screens */}
+          {/* Mobile view: More options */}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-haspopup="true"
-              color="inherit"
-            >
+            <IconButton size="large" aria-label="show more" aria-haspopup="true" color="inherit">
               <MoreIcon />
             </IconButton>
           </Box>

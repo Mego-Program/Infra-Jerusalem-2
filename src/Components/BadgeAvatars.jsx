@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import { Button } from '@mui/material';
 
+// Styled Badge component with custom styling
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: '#44b700',
@@ -11,52 +12,32 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-
+// Main component for BadgeAvatars
 export default function BadgeAvatars() {
+  // State for badge visibility
+  const [invisible, setInvisible] = useState(false);
 
-  const [invisible, setInvisible] = React.useState(false);
+  // Toggle badge visibility
   const handleBadgeVisibility = () => {
-    setInvisible(!invisible);   // chang to conected or not conected
+    setInvisible(!invisible);
+    // Change to connected or not connected
+    // You might want to update the comment here based on the actual behavior
   };
+
   return (
     <Button 
-    sx={{marginRight:'2vh'}} 
-    onClick={()=>{    //  change onClike to show a menu 
-      handleBadgeVisibility()
-    }}>
+      sx={{ marginRight: '2vh' }} 
+      onClick={handleBadgeVisibility}
+    >
+      {/* Avatar with an overlaid badge */}
       <StyledBadge
         overlap="circular"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         variant="dot"
         invisible={invisible}
       >
-        <Avatar alt="Emma Taylor" src=""/>
+        <Avatar alt="Emma Taylor" src="" />
       </StyledBadge>
-      </Button>
+    </Button>
   );
 }
-
-
-
-//================================
-
-// <Badge
-// badgeContent=" "
-// variant="dot"
-// color="greenBadge"
-// anchorOrigin={{
-//   vertical: "bottom",
-//   horizontal: "right",
-// }}
-// >
-// <Avatar
-//   // alt="User Image"
-//   src="D2.jpg" // Ensure the image path is correct
-//   sx={{
-//     width: 49,
-//     height: 49,
-//     borderRadius: "50%",
-//     marginRight: 3, //this is to space them
-//   }}
-// />
-// </Badge>
