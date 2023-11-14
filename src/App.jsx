@@ -17,7 +17,7 @@ import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
 
-// Importing layouts
+ 
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
