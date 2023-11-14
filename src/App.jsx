@@ -5,7 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-// Importing pages
 import Dashboard from "./pages/mainMenu/Dashboard";
 import Projects from "./pages/mainMenu/Projects";
 import Board from "./pages/mainMenu/Board";
