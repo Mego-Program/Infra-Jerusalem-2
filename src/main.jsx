@@ -9,10 +9,12 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+
+// Creating a custom theme for MUI components
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#F6C927",
+      main: "#21213E",
     },
     secondary: {
       main: "#0A0A1B",
@@ -20,15 +22,17 @@ const theme = createTheme({
     background: {
       main: "#21213E",
     },
-
   },
 });
 
+// Rendering the main App component in a root element
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    {/* Providing the custom theme to the entire app */}
     <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      {/* CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
+      {/* Main App component */}
       <App />
     </ThemeProvider>
   </React.StrictMode>

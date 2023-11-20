@@ -1,43 +1,56 @@
-import React from "react";
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route,
   createRoutesFromElements,
+  Route,
+  RouterProvider,
 } from "react-router-dom";
-import UserNotifications from "./Components/UserNotifications";
-import SearchInput from "./Components/SearchInput";
-import SignIn from "./Components/SignIn";
-import Header from "./Components/Header";
-import SignUp from "./Components/SignUp";
+import Dashboard from "./pages/mainMenu/Dashboard";
+import Projects from "./pages/mainMenu/Projects";
+import Board from "./pages/mainMenu/Board";
+import AddUser from "./pages/mainMenu/AddUser";
+import Messages from "./pages/mainMenu/Messages";
+import Settings from "./pages/mainMenu/Settings";
+import Info from "./pages/mainMenu/Info";
+import NotFound from "./pages/mainMenu/NotFound";
+import SignIn from "./pages/connection/SignIn";
+import SignUp from "./pages/connection/SignUp";
 
-import axios from "axios";
-import { Token } from "@mui/icons-material";
+// Importing layouts
+import RootLayout from "./layouts/RootLayout";
+import AuthLayout from "./layouts/AuthLayout";
 
-const askServer = async (reqName) =>{
-  try {
-  const token = localStorage.getItem('token')
-  
-    const response = await axios.get('http://localhost:5173/' + reqName, token);
-    return response.data;
-  } catch (error) {
-    console.error(error);
+// Creating a router using react-router-dom
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      {/* Routes for authentication */}
+      <Route index element={<AuthLayout />} />
+      <Route path="signIn" element={<SignIn />} />
+      <Route path="signUp" element={<SignUp />} />
 
-  }
-
-}
-
-function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" >
-        <Route path="signin" element={<SignIn />} ></Route>
-        <Route path="signup" element={<SignUp />}></Route>
-        <Route path="dashboard" element={<Header />}></Route>
-        <Route index element={<SignUp />}></Route>
+      {/* Routes for the main application with RootLayout */}
+      <Route path="rootLayout" element={<RootLayout />}>
+        {/* Default route for the main application */}
+        <Route index element={<Dashboard />} />
+        
+        {/* Individual routes for each main menu item */}
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="projects" element={<Projects />} />
+        <Route path="board" element={<Board />} />
+        <Route path="addUser" element={<AddUser />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="info" element={<Info />} />
       </Route>
-    )
-  );
+
+      {/* 404 Not Found route */}
+      <Route path="*" element={<NotFound />} />
+    </Route>
+  )
+);
+
+// Main App component that provides the router
+function App() {
   return <RouterProvider router={router} />;
 }
 
