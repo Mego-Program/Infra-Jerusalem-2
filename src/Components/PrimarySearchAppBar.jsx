@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
+import { useState } from "react";
 import {
   AppBar,
   Box,
@@ -11,9 +12,10 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MoreIcon from "@mui/icons-material/MoreVert";
+// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import BadgeAvatars from "./BadgeAvatars";
+import PositionedMenu from "./PositionedMenu";
+import MobileMenu from "./mobileMenu";
 
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
@@ -92,7 +94,9 @@ export default function PrimarySearchAppBar() {
               }}
             >
               {/* User profile */}
-              <Box sx={{ display: "flex", alignItems: "center", marginRight: 4 }}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
+              >
                 <BadgeAvatars />
                 <Box>
                   <Typography variant="body2" sx={{ color: "white", mb: 0 }}>
@@ -105,23 +109,39 @@ export default function PrimarySearchAppBar() {
               </Box>
 
               {/* Notifications */}
-              <IconButton size="large" aria-label="10" color="inherit" sx={{ bgcolor: "#21213E" }}>
+              <IconButton
+                size="large"
+                aria-label="10"
+                color="inherit"
+                sx={{ bgcolor: "#21213E" }}
+              >
                 <Badge badgeContent={10} color="error">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
 
               {/* More options */}
-              <IconButton size="large" color="inherit" sx={{ bgcolor: "#21213E", m: "1vh" }}>
-                <MoreHorizIcon />
+              <IconButton
+                size="large"
+                color="inherit"
+                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px"  }}
+                
+              >
+                <PositionedMenu />
               </IconButton>
             </Box>
           </Box>
 
           {/* Mobile view: More options */}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton size="large" aria-label="show more" aria-haspopup="true" color="inherit">
-              <MoreIcon />
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-haspopup="true"
+              color="inherit"
+              
+            >
+              <MobileMenu />
             </IconButton>
           </Box>
         </Toolbar>
