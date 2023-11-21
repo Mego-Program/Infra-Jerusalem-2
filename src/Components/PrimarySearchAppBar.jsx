@@ -13,9 +13,9 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 // import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import BadgeAvatars from "./BadgeAvatars";
 import PositionedMenu from "./PositionedMenu";
+import MobileMenu from "./mobileMenu";
 
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
@@ -141,7 +141,7 @@ export default function PrimarySearchAppBar() {
               color="inherit"
               
             >
-              <MoreIcon />
+              <MobileMenu />
             </IconButton>
           </Box>
         </Toolbar>
