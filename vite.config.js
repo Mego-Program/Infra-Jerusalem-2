@@ -6,4 +6,27 @@ export default defineConfig({
   plugins: [react()], 
 })
 
+// import { defineConfig } from 'vite';
+// import react from '@vitejs/plugin-react';
+// import federation from "@originjs/vite-plugin-federation";
+
+// export default defineConfig({
+//   plugins: [
+//     react(),
+//     federation({
+//       name: 'infra',
+//       remotes: {
+//         project: 'http://localhost:5173/remoteEntry.js', // Adjust the URL to where your "Project" app is running
+//       },
+//       shared: ['react', 'react-dom', 'react-router-dom', 'react-dnd', 'axios', /* other shared dependencies */],
+//     }),
+//   ],
+//   // ... other configurations
+//     build: {
+//     modulePreload: false,
+//     target: "esnext",
+//     minify: false,
+//     cssCodeSplit: false,
+//   },
+// });
 
