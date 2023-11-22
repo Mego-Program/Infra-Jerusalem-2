@@ -41,7 +41,7 @@ function RootLayout({ window }) {
   const renderLinks = (links, marginLeft = "0vh") => (
     <List sx={{ flex: 1, marginLeft }}>
       {links.map(({ to, text, icon }, index) => (
-        <NavLink key={index} to={to} style={{ textDecoration: "none" }}>
+        <NavLink key={index} to={to} style={{ textDecoration: "none" ,}}>
           <ListItem>
             <ListItemButton
               onClick={() => activeButton(text)}

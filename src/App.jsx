@@ -16,10 +16,13 @@ import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
-
- 
+// import useUserDetails from "./atom/userAtom";
+import { useState } from "react";
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
+
+
+
 
 // Creating a router using react-router-dom
 const router = createBrowserRouter(
@@ -53,6 +56,10 @@ const router = createBrowserRouter(
 
 // Main App component that provides the router
 function App() {
+
+  
+  // const [userDetails] = useUserDetails();
+
   return <RouterProvider router={router} />;
 }
 
