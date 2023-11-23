@@ -16,8 +16,10 @@ import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
+import { useState } from "react";
 
- 
+import  MainProjects  from "project/AppProjects";
+console.log(MainProjects);
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
@@ -34,10 +36,10 @@ const router = createBrowserRouter(
       <Route path="rootLayout" element={<RootLayout />}>
         {/* Default route for the main application */}
         <Route index element={<Dashboard />} />
-        
+
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="projects" element={<Projects />} />
+        <Route path="projects" element={<MainProjects/>} />
         <Route path="board" element={<Board />} />
         <Route path="addUser" element={<AddUser />} />
         <Route path="messages" element={<Messages />} />
