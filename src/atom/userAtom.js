@@ -1,8 +1,9 @@
-// import { atom, useAtom } from 'jotai'
+import { atom, useAtom } from 'jotai'
 
 
-// const user = atom({});
-// function useUserDetails(){
-//     const [userDetails, setUserDetails] = useAtom(user);
-// }
-// export default useUserDetails
+const userDetails= atom({});
+
+const useUserDetails =() => useAtom(userDetails);
+
+
+export default useUserDetails

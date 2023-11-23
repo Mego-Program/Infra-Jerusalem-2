@@ -26,8 +26,9 @@ export default function SignUp() {
 
     try {
       const response = await axios.post("http://localhost:3000/signup", {
-        name: `${formData.get("firstName")} ${formData.get("lastName")}`,
-        username: formData.get("username"),
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        userName: formData.get("username"),
         password: formData.get("password"),
         email: formData.get("email"),
       });
@@ -193,18 +194,18 @@ const textFieldStyles = {
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#F6C927",
   },
-  "&:hover": {
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#F6C927",
-    },
-    "& .MuiInputLabel-root": {
-      color: "#F6C927",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#F6C927",
-    },
+  "& .MuiOutlinedInput-input": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-input.Mui-focused": {
+    color: "white",
+  },
+  "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#F6C927",
+    color: "#F6C927",
   },
 };
+
 
 
 const buttonStyles = {
@@ -214,6 +215,8 @@ const buttonStyles = {
   border: "solid white 2px",
   "&:hover": {
     backgroundColor: "#21213E",
+    borderColor: "#F6C927",
+
   },
   "&.Mui-focusVisible": {
     backgroundColor: "#21213E",

@@ -16,10 +16,11 @@ import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
-// import useUserDetails from "./atom/userAtom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import useUserDetails from "./atom/userAtom";
+import axios from "axios";
 
 
 
@@ -54,11 +55,42 @@ const router = createBrowserRouter(
   )
 );
 
+async function getUserDetails(){
+  try{
+    const token = localStorage.getItem('token')
+    const response = await axios.get(
+      "http://localalhost:3000/userDetails"
+    ,{
+      headers:{
+        Authorization:token
+      }
+
+    });
+    if (response.status === 200){
+    return response.data}
+    else{
+      console.log('no token');
+    }
+  }
+  catch(error){
+    console.log(error);
+
+  }
+}
+
 // Main App component that provides the router
 function App() {
+  const [userDetails, setUserDetails] = useUserDetails();
 
+  useEffect(()=>{
+    const fetchUserDetails = async()=>{
+      const data = await getUserDetails();
+      setUserDetails(data)
+
+    }
+    fetchUserDetails()
+  },[])
   
-  // const [userDetails] = useUserDetails();
 
   return <RouterProvider router={router} />;
 }
