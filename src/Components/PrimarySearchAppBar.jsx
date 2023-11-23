@@ -12,10 +12,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import BadgeAvatars from "./BadgeAvatars";
-import PositionedMenu from "./PositionedMenu";
-import MobileMenu from "./mobileMenu";
+import AccountMenu from "./AccountMenu";
+
 
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
@@ -124,10 +123,9 @@ export default function PrimarySearchAppBar() {
               <IconButton
                 size="large"
                 color="inherit"
-                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px"  }}
-                
+                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px" }}
               >
-                <PositionedMenu />
+                <AccountMenu/>
               </IconButton>
             </Box>
           </Box>
@@ -141,7 +139,7 @@ export default function PrimarySearchAppBar() {
               color="inherit"
               
             >
-              <MobileMenu />
+              <AccountMenu/>
             </IconButton>
           </Box>
         </Toolbar>
