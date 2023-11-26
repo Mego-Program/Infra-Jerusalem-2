@@ -7,7 +7,7 @@ import {
 
 // Importing pages
 import Dashboard from "./pages/mainMenu/Dashboard";
-import Projects from "./pages/mainMenu/Projects";
+import Projects from "./pages/mainMenu/Projects";// delete
 import Board from "./pages/mainMenu/Board";
 import AddUser from "./pages/mainMenu/AddUser";
 import Messages from "./pages/mainMenu/Messages";
@@ -16,10 +16,13 @@ import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
-import { useState } from "react";
 
-import  MainProjects  from "project/AppProjects";
-console.log(MainProjects);
+// remots curntly working
+import MainProjects  from "project/AppProjects"; // cahnge to appProject
+import AppCommunication from "communication/AppCommunication";
+import SpecsApp from "specs/SpecsApp"
+
+//roots
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
@@ -40,9 +43,9 @@ const router = createBrowserRouter(
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<MainProjects/>} />
-        <Route path="board" element={<Board />} />
+        <Route path="board" element={<SpecsApp />} />
         <Route path="addUser" element={<AddUser />} />
-        <Route path="messages" element={<Messages />} />
+        <Route path="messages" element={<AppCommunication />} />
         <Route path="settings" element={<Settings />} />
         <Route path="info" element={<Info />} />
       </Route>

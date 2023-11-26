@@ -16,9 +16,12 @@ export default defineConfig({
     federation({
       name: 'infra',
       remotes: {
-        project: 'http://localhost:4173/assets/remoteEntry.js', // Adjust the URL to where your "Project" app is running
+        // make sure url are not the same
+        project: 'http://localhost:4175/assets/remoteEntry.js', 
+        communication: 'http://localhost:4173/assets/remoteEntry.js',
+        specs: 'http://localhost:4174/assets/remoteEntry.js'
       },
-      shared: ['react', 'react-dom', /* other shared dependencies */],
+      shared: ['react', 'react-dom','react-router-dom' /* other shared dependencies */],
     }),
   ],
   // ... other configurations
