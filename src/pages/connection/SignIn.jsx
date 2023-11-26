@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useNavigate } from 'react-router-dom';
+import useCameFromNavigation from '../../atom/userAtom.js'
 const theme = createTheme();
 
 const textFieldStyles = {
@@ -76,6 +76,7 @@ const rememberMeStyles = {
 
 export default function SignIn() {
   const [token, setToken] = useState(null);
+  const navigateRootLayout = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -85,9 +86,14 @@ export default function SignIn() {
         email: data.get("email"),
         password: data.get("password"),
       });
-      console.log(response);
-      setToken(response.data.token);
+      if (response.status === 200){
+        setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      
+      navigateRootLayout('/rootLayout')
+
+      }
+      
     } catch (error) {
       console.error(error);
     }

@@ -13,12 +13,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const [token, setToken] = useState("");
+
+  const navigeteSignIn = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +34,13 @@ export default function SignUp() {
         email: formData.get("email"),
       });
 
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
+      if (response.status === 200){
+
+        navigeteSignIn('/signIn')
+
+
+      }
+
     } catch (error) {
       console.error(error);
     }
