@@ -32,7 +32,10 @@ export default function AccountMenu() {
           textAlign: "center",
         }}
       >
-        <Tooltip title="Account settings">
+        <Tooltip
+          title="Account settings"
+          sx={{ bgcolor: open ? "#F6C927" : "#21213E" }}
+        >
           <IconButton
             onClick={handleClick}
             size="large"
@@ -70,6 +73,9 @@ export default function AccountMenu() {
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            backgroundColor: "#121231",
+            border: "solid #21213E 5px",
+            color: "white",
             mt: 1.5,
             "& .MuiAvatar-root": {
               width: 32,
@@ -85,7 +91,7 @@ export default function AccountMenu() {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
+              bgcolor: "#121231",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
@@ -94,28 +100,95 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#21213E",
+              color: "#F6C927",
+              "& .MuiAvatar-root": {
+                backgroundColor: "#21213E",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#F6C927",
+              },
+            },
+            "& .MuiAvatar-root": {
+              backgroundColor: "#121231",
+            },
+          }}
+        >
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#21213E",
+              color: "#F6C927",
+              "& .MuiAvatar-root": {
+                backgroundColor: "#21213E",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#F6C927",
+              },
+            },
+            "& .MuiAvatar-root": {
+              backgroundColor: "#121231",
+            },
+          }}
+        >
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#21213E",
+              color: "#F6C927",
+              "& .MuiSvgIcon-root": {
+                color: "#F6C927",
+              },
+            },
+          }}
+        >
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <PersonAdd fontSize="small" sx={{ color: "white" }} />
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#21213E",
+              color: "#F6C927",
+              "& .MuiSvgIcon-root": {
+                color: "#F6C927",
+              },
+            },
+          }}
+        >
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <Settings fontSize="small" sx={{ color: "white" }} />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#21213E",
+              color: "#F6C927",
+              "& .MuiSvgIcon-root": {
+                color: "#F6C927",
+              },
+            },
+          }}
+        >
           <ListItemIcon>
-            <Logout fontSize="small" />
+            <Logout fontSize="small" sx={{ color: "white" }} />
           </ListItemIcon>
           Logout
         </MenuItem>

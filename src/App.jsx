@@ -21,6 +21,8 @@ import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import useUserDetails from "./atom/userAtom";
 import axios from "axios";
+import MyProfile from "./Components/MyProfile";
+
 
 
 
@@ -48,6 +50,7 @@ const router = createBrowserRouter(
         <Route path="settings" element={<Settings />} />
         <Route path="info" element={<Info />} />
       </Route>
+
 
       {/* 404 Not Found route */}
       <Route path="*" element={<NotFound />} />
