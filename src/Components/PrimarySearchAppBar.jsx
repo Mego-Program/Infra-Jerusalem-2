@@ -125,7 +125,7 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
                 sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px" }}
               >
-                {/* <AccountMenu/> */}
+                <AccountMenu/>
               </IconButton>
             </Box>
           </Box>
