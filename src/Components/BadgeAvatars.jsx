@@ -103,35 +103,6 @@ export default function BadgeAvatars() {
           {/* <DeleteIcon /> */}
         </Button>
       )}
-
-      <Menu
-        id="profile-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        sx={{
-          "& .MuiList-root": {
-            backgroundColor: "#121231",
-            border: "solid #21213E 5px",
-            color: "white",
-          },
-        }}
-      >
-        <MenuItem
-          onClick={handleUploadPicture}
-          sx={{ "&:hover": { backgroundColor: "#21213E", color: "#F6C927" } }}
-        >
-          <CloudUploadIcon sx={{mr:"15px"}}/>
-          Upload Picture
-        </MenuItem>
-        <MenuItem
-          onClick={handleDeleteImage}
-          sx={{ "&:hover": { backgroundColor: "#21213E", color: "#F6C927" } }}
-        >
-          <DeleteIcon sx={{mr:"15px"}}/>
-          Remove Picture
-        </MenuItem>
-      </Menu>
     </div>
   );
 }
