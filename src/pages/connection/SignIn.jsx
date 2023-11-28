@@ -58,6 +58,11 @@ const buttonStyles = {
     backgroundColor: "#21213E",
     borderColor: "#F6C927",
   },
+  "& input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill:active": {
+    WebkitBoxShadow: "0 0 0 30px #121231 inset !important",
+    WebkitTextFillColor: "white !important",
+  },
+  
 };
 
 const checkboxStyles = {
@@ -87,6 +92,7 @@ export default function SignIn() {
         password: data.get("password"),
       });
       if (response.status === 200){
+        console.log(response);
         setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       
