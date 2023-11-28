@@ -16,11 +16,18 @@ import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import useUserDetails from "./atom/userAtom";
 import axios from "axios";
+import  Refresh  from "./pages/connection/Refresh";
+
+import MainProjects  from "project/AppProjects"; // cahnge to appProject
+// import AppCommunication from "communication/AppCommunication";
+// import SpecsApp from "specs/SpecsApp"
+
+
 
 const defaultRouter = createBrowserRouter(
   createRoutesFromElements(<Route path="*" element={<Refresh />} />)
@@ -43,9 +50,9 @@ const router = createBrowserRouter(
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<MainProjects/>} />
-        <Route path="board" element={<SpecsApp />} />
+        <Route path="board" element={<Board />} />
         <Route path="addUser" element={<AddUser />} />
-        <Route path="messages" element={<AppCommunication />} />
+        <Route path="messages" element={<Messages />} />
         <Route path="settings" element={<Settings />} />
         <Route path="info" element={<Info />} />
       </Route>
@@ -66,13 +73,13 @@ const invalidRouter = createBrowserRouter(
 
       {/* Routes for the main application with RootLayout */}
 
-      <Route path="rootLayout" element={<SignIn />}>
+      <Route path="rootLayout" element={<RootLayout />}>
         {/* Default route for the main application */}
         <Route index element={<Dashboard />} />
 
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<SignIn />} />
-        <Route path="projects" element={<SignIn />} />
+        <Route path="projects" element={<MainProjects />} />
         <Route path="board" element={<SignIn />} />
         <Route path="addUser" element={<SignIn />} />
         <Route path="messages" element={<SignIn />} />

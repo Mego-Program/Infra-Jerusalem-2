@@ -17,9 +17,9 @@ export default defineConfig({
       name: 'infra',
       remotes: {
         // make sure url are not the same
-        project: 'http://localhost:4175/assets/remoteEntry.js', 
-        communication: 'http://localhost:4173/assets/remoteEntry.js',
-        specs: 'http://localhost:4174/assets/remoteEntry.js'
+        project: 'https://project-jerusalem-2.vercel.app/assets/remoteEntry.js', 
+        // communication: 'http://localhost:4173/assets/remoteEntry.js',
+        // specs: 'http://localhost:4174/assets/remoteEntry.js'
       },
       shared: ['react', 'react-dom','react-router-dom' /* other shared dependencies */],
     }),
