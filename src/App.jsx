@@ -25,6 +25,13 @@ import SpecsApp from "specs/SpecsApp"
 //roots
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import useUserDetails from "./atom/userAtom";
+import axios from "axios";
+
+
+
+
+
 
 // Creating a router using react-router-dom
 const router = createBrowserRouter(
@@ -36,6 +43,7 @@ const router = createBrowserRouter(
       <Route path="signUp" element={<SignUp />} />
 
       {/* Routes for the main application with RootLayout */}
+    
       <Route path="rootLayout" element={<RootLayout />}>
         {/* Default route for the main application */}
         <Route index element={<Dashboard />} />
@@ -56,9 +64,54 @@ const router = createBrowserRouter(
   )
 );
 
+async function getUserDetails(){
+  try{
+    const token = localStorage.getItem('token')
+    
+    const response = await axios.get(
+      "http://localhost:3000/userDetails"
+      ,{
+      headers:{
+        Authorization:token
+      }
+
+    });
+    console.log(response);
+
+
+    if (response.status === 200){
+      
+
+    return response.data}
+    else{
+      console.log('no token');
+    }
+  }
+  catch(error){
+    console.log(error);
+
+  }
+}
+
 // Main App component that provides the router
 function App() {
-  return <RouterProvider router={router} />;
+  const [userDetails, setUserDetails] = useUserDetails();
+
+  useEffect(()=>{
+    const fetchUserDetails = async()=>{
+      const data = await getUserDetails();
+      setTokenProvied(true)
+     console.log(data);
+
+      setUserDetails(data)
+      
+
+    }
+    fetchUserDetails()
+  },[])
+  
+
+  return <RouterProvider router={token ? router : token === false } />;
 }
 
 export default App;
