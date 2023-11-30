@@ -10,13 +10,7 @@ export default function AuthLayout() {
         <h1 style={{Margin: "0px"}}>Website </h1>
         <Typography>
           {/* Placeholder text */}
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque quas
-          debitis quibusdam deserunt repellat hic molestias ipsum commodi aut
-          odit!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque quas
-          debitis quibusdam deserunt repellat hic molestias ipsum commodi aut
-          odit!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque quas
-          debitis quibusdam deserunt repellat hic molestias ipsum commodi aut
-          odit!
+          
         </Typography>
       </Box>
       

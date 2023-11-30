@@ -25,7 +25,7 @@ import  Refresh  from "./pages/connection/Refresh";
 
 import MainProjects  from "project/AppProjects"; // cahnge to appProject
 // import AppCommunication from "communication/AppCommunication";
-// import SpecsApp from "specs/SpecsApp"
+import SpecsApp from "specs/SpecsApp"
 
 
 
@@ -50,7 +50,7 @@ const router = createBrowserRouter(
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<MainProjects/>} />
-        <Route path="board" element={<Board />} />
+        <Route path="board" element={<SpecsApp />} />
         <Route path="addUser" element={<AddUser />} />
         <Route path="messages" element={<Messages />} />
         <Route path="settings" element={<Settings />} />
