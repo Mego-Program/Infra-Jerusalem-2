@@ -19,7 +19,7 @@ export default defineConfig({
         // make sure url are not the same
         project: 'https://project-jerusalem-2.vercel.app/assets/remoteEntry.js', 
         // communication: 'http://localhost:4173/assets/remoteEntry.js',
-        // specs: 'http://localhost:4174/assets/remoteEntry.js'
+        specs: 'https://jlm-specs-2.vercel.app/assets/remoteEntry.js'
       },
       shared: ['react', 'react-dom','react-router-dom' /* other shared dependencies */],
     }),
