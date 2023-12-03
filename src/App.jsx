@@ -25,7 +25,7 @@ import  Refresh  from "./pages/connection/Refresh";
 
 import MainProjects  from "project/AppProjects"; // cahnge to appProject
 // import AppCommunication from "communication/AppCommunication";
-import SpecsApp from "../../Jlm-Specs-2-main/src/SpecsApp"
+import SpecsApp from "specs/SpecsApp"
 
 
 
