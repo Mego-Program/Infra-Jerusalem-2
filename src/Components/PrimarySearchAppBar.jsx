@@ -12,10 +12,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import BadgeAvatars from "./BadgeAvatars";
-import PositionedMenu from "./PositionedMenu";
-import MobileMenu from "./mobileMenu";
+import AccountMenu from "./AccountMenu";
+
 
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
@@ -27,7 +26,7 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(4.5),
   marginLeft: 0,
-  width: "60%", 
+  width: "60%", // Adjust the width as needed
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(),
     width: "auto",
@@ -52,9 +51,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "100%", 
+    width: "100%", // Adjust the width as needed
     [theme.breakpoints.up("md")]: {
-      width: "25ch",
+      width: "25ch", // Adjust the width as needed
     },
   },
 }));
@@ -124,10 +123,9 @@ export default function PrimarySearchAppBar() {
               <IconButton
                 size="large"
                 color="inherit"
-                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px"  }}
-                
+                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px" }}
               >
-                <PositionedMenu />
+                <AccountMenu/>
               </IconButton>
             </Box>
           </Box>
@@ -141,7 +139,7 @@ export default function PrimarySearchAppBar() {
               color="inherit"
               
             >
-              <MobileMenu />
+              <AccountMenu/>
             </IconButton>
           </Box>
         </Toolbar>

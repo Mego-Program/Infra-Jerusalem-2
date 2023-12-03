@@ -26,7 +26,7 @@ const theme = createTheme({
 });
 
 // Rendering the main App component in a root element
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("R")).render(
   <React.StrictMode>
     {/* Providing the custom theme to the entire app */}
     <ThemeProvider theme={theme}>
