@@ -99,7 +99,7 @@ export default function SignUp() {
                 {["firstName", "lastName"].map((field) => (
                   <Grid item xs={6} key={field}>
                     <TextField
-                      autoComplete="off"
+                      autoComplete=""
                       name={field}
                       required
                       fullWidth
@@ -122,7 +122,7 @@ export default function SignUp() {
                   (field) => (
                     <Grid item xs={12} key={field}>
                       <TextField
-                        autoComplete="off"
+                        autoComplete=""
                         name={field}
                         required
                         fullWidth
