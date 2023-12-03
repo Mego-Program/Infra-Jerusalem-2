@@ -150,7 +150,7 @@ function RootLayout({ window }) {
 
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 },}}
       >
         {/* Mobile Drawer */}
         <Drawer
@@ -187,7 +187,7 @@ function RootLayout({ window }) {
       </Box>
 
       {/* Main content area */}
-      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E" }}>
+      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width:'100%'}}>
         <Outlet />
       </Box>
     </Box>
