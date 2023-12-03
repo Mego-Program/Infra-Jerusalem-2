@@ -107,7 +107,7 @@ export default function AuthLayout() {
       >
         <Box sx={{ margin: "20px", width: "40%", height: "60px" }}>
           {/* Sign In link */}
-          <NavLink to="signIn" style={{ color: "#F6C927" }}>
+          <NavLink to="sign-in" style={{ color: "#F6C927" }}>
             <Button
               sx={{
                 bgcolor: "#F6C927",
@@ -122,7 +122,7 @@ export default function AuthLayout() {
           </NavLink>
         </Box>
         <Box sx={{ margin: "20px", width: "40%", height: "60px" }}>
-          <NavLink to="signUp" style={{ color: "#F6C927" }}>
+          <NavLink to="sign-up" style={{ color: "#F6C927" }}>
             <Button
               sx={{
                 bgcolor: "#F6C927",
