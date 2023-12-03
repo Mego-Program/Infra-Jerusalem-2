@@ -25,7 +25,7 @@ import  Refresh  from "./pages/connection/Refresh";
 
 import MainProjects  from "project/AppProjects"; // cahnge to appProject
 // import AppCommunication from "communication/AppCommunication";
-import SpecsApp from "specs/SpecsApp"
+import SpecsApp from "../../Jlm-Specs-2-main/src/SpecsApp"
 
 
 
@@ -38,12 +38,12 @@ const router = createBrowserRouter(
     <Route path="/">
       {/* Routes for authentication */}
       <Route index element={<AuthLayout />} />
-      <Route path="signIn" element={<SignIn />} />
-      <Route path="signUp" element={<SignUp />} />
+      <Route path="sign-in" element={<SignIn />} />
+      <Route path="sign-up" element={<SignUp />} />
 
       {/* Routes for the main application with RootLayout */}
 
-      <Route path="rootLayout" element={<RootLayout />}>
+      <Route path="root-layout" element={<RootLayout />}>
         {/* Default route for the main application */}
         <Route index element={<Dashboard />} />
 
@@ -51,7 +51,7 @@ const router = createBrowserRouter(
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<MainProjects/>} />
         <Route path="board" element={<SpecsApp />} />
-        <Route path="addUser" element={<AddUser />} />
+        <Route path="add-user" element={<AddUser />} />
         <Route path="messages" element={<Messages />} />
         <Route path="settings" element={<Settings />} />
         <Route path="info" element={<Info />} />
@@ -69,20 +69,20 @@ const invalidRouter = createBrowserRouter(
     <Route path="/">
       {/* Routes for authentication */}
       <Route index element={<AuthLayout />} />
-      <Route path="signIn" element={<SignIn />} />
-      <Route path="signUp" element={<SignUp />} />
+      <Route path="sign-in" element={<SignIn />} />
+      <Route path="sign-up" element={<SignUp />} />
 
       {/* Routes for the main application with RootLayout */}
 
-      <Route path="rootLayout" element={<RootLayout />}>
+      <Route path="root-layout" element={<RootLayout />}>
         {/* Default route for the main application */}
         <Route index element={<Dashboard />} />
 
         {/* Individual routes for each main menu item */}
         <Route path="dashboard" element={<SignIn />} />
         <Route path="projects" element={<MainProjects />} />
-        <Route path="board" element={<SignIn />} />
-        <Route path="addUser" element={<SignIn />} />
+        <Route path="board" element={<SpecsApp />} />
+        <Route path="add-user" element={<SignIn />} />
         <Route path="messages" element={<SignIn />} />
         <Route path="settings" element={<SignIn />} />
         <Route path="info" element={<SignIn />} />

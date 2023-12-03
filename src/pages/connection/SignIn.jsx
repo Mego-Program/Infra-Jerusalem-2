@@ -200,7 +200,7 @@ export default function SignIn() {
                   </NavLink>
                 </Grid>
                 <Grid item>
-                  <NavLink to="/signUp" style={{ color: "#F6C927" }}>
+                  <NavLink to="/sign-up" style={{ color: "#F6C927" }}>
                     {"Don't have an account? Sign Up"}
                   </NavLink>
                 </Grid>
