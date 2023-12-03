@@ -11,14 +11,19 @@ export default function AuthLayout() {
         color: "white",
         bgcolor: "#21213E",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         minHeight: "100vh",
         minWidth: "100vh",
       }}
     >
       {/* Left side content */}
-      <Box sx={{ pr: "50px", width: "60%", height: "700px" }}>
+      <Box
+        sx={{
+          pt: "2%",
+          pr: "2%",
+          width: "65%",
+          height: "100%"
+        }}
+      >
         <svg
           width="237"
           height="41"
@@ -63,23 +68,29 @@ export default function AuthLayout() {
             </linearGradient>
           </defs>
         </svg>
-        <div style={{ height: "30%" }} />
-
-        <h1 style={{ Margin: "0px" }}>
-          CodeClique: Navigating Your Week with Seamless Productivity{" "}
-        </h1>
-        <Typography>
-          {/* Placeholder text */}
-          Dive into a world of organized efficiency with CodeClique, your go-to
-          platform for streamlining tasks and conquering your weekly agenda.
-          CodeClique empowers teams and individuals to collaborate effortlessly,
-          ensuring that every project and deadline is met with precision. From
-          intuitive project management to customizable workflows, CodeClique is
-          the compass that guides you through a week of productivity. Say
-          farewell to chaos and embrace a site that turns your workweek into a
-          smooth, well-coordinated expedition. Elevate your efficiency, amplify
-          collaboration, and chart your course to success with CodeClique.
-        </Typography>
+          <h1 style={{marginTop:"25%"}}>
+            CodeClique: Navigating Your Week with Seamless Productivity{" "}
+          </h1>
+          <Typography>
+            {/* Placeholder text */}
+            Dive into a world of organized efficiency with CodeClique, your
+            go-to platform for streamlining tasks and conquering your weekly
+            agenda.
+            <br />
+            CodeClique empowers teams and individuals to collaborate
+            effortlessly, ensuring that every project and deadline is met with
+            precision.
+            <br />
+            From intuitive project management to customizable workflows,
+            CodeClique is the compass that guides you through a week of
+            productivity.
+            <br />
+            Say farewell to chaos and embrace a site that turns your workweek
+            into a smooth, well-coordinated expedition.
+            <br />
+            Elevate your efficiency, amplify collaboration, and chart your
+            course to success with CodeClique.
+          </Typography>
       </Box>
 
       {/* Right side content - Sign In and Sign Up links */}
