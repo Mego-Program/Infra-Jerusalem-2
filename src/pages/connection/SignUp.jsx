@@ -14,24 +14,42 @@ import Container from "@mui/material/Container";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { NavLink, useNavigate } from "react-router-dom";
+import { userSchema } from "../../validations/UserValidation";
+import { Password } from "@mui/icons-material";
 
 const theme = createTheme();
 
 export default function SignUp() {
 
+  const createUser = async (event) => {
+    event.preventDefault();
+    let formDtatValid = {
+      firstName: event.target.firstName.value,
+      lastName: event.target.lastName.value,
+      username: event.target.username.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    }
+    const isValid = await userSchema.isValid(formDtatValid);
+  
+    if(isValid && event.target.verifyPassword.value===event.target.password.value ){handleSubmit(formDtatValid)}
+  }
+
   const navigeteSignIn = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleSubmit = async (verifiedDataForm) => {
+    console.log(verifiedDataForm);
+    // verifiedDataForm.preventDefault();
+    // const formData = new FormData(verifiedDataForm);
+    // console.log(formData);
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
-        userName: formData.get("username"),
-        password: formData.get("password"),
-        email: formData.get("email"),
+      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
+        firstName: verifiedDataForm.firstName,
+        lastName: verifiedDataForm.lastName,
+        userName: verifiedDataForm.username,
+        password: verifiedDataForm.password,
+        email: verifiedDataForm.email,
       });
 
       if (response.status === 200){
@@ -92,7 +110,7 @@ export default function SignUp() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={createUser}
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
@@ -227,7 +245,7 @@ const textFieldStyles = {
     color: "white",
   },
   "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#F6C927 !important",
+    borderColor: "#F6C927",
     color: "#F6C927",
   },
 };
