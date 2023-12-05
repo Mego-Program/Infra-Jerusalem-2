@@ -13,7 +13,7 @@ export const linksTop = [
   { to: "dashboard", icon: <SpeedIcon />, text: "Dashboard" },
   { to: "projects", icon: <FeedOutlinedIcon />, text: "Projects" },
   { to: "board", icon: <BrokenImageOutlinedIcon />, text: "Board" },
-  { to: "addUser", icon: <PersonAddAltOutlinedIcon />, text: "Add User" },
+  { to: "add-user", icon: <PersonAddAltOutlinedIcon />, text: "Add User" },
   {
     to: "messages",
     icon: (

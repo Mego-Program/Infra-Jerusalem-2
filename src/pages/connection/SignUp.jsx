@@ -36,7 +36,7 @@ export default function SignUp() {
 
       if (response.status === 200){
 
-        navigeteSignIn('/signIn')
+        navigeteSignIn('/sign-in')
 
 
       }
