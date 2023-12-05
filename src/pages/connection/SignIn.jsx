@@ -38,7 +38,7 @@ const textFieldStyles = {
   },
   "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline":
     {
-      borderColor: "#F6C927",
+      borderColor: "#F6C927 !important",
       color: "#F6C927",
     },
 };
@@ -85,7 +85,7 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const response = await axios.post("http://localhost:3000/signin", {
+      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signin", {
         email: data.get("email"),
         password: data.get("password"),
       });
@@ -158,7 +158,6 @@ export default function SignIn() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="off"
                 autoFocus
                 sx={textFieldStyles}
               />

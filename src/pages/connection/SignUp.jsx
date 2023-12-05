@@ -26,7 +26,7 @@ export default function SignUp() {
     const formData = new FormData(event.currentTarget);
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
+      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
         userName: formData.get("username"),
@@ -227,7 +227,7 @@ const textFieldStyles = {
     color: "white",
   },
   "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#F6C927",
+    borderColor: "#F6C927 !important",
     color: "#F6C927",
   },
 };
