@@ -26,7 +26,7 @@ export default function SignUp() {
     const formData = new FormData(event.currentTarget);
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
+      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
         userName: formData.get("username"),

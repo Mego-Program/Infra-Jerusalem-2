@@ -7,7 +7,6 @@ import {
 
 import Dashboard from "./pages/mainMenu/Dashboard";
 import AddUser from "./pages/mainMenu/AddUser";
-import Messages from "./pages/mainMenu/Messages";
 import Settings from "./pages/mainMenu/Settings";
 import Info from "./pages/mainMenu/Info";
 import NotFound from "./pages/mainMenu/NotFound";
@@ -57,8 +56,8 @@ const invalidRouter = createBrowserRouter(
       <Route path="sign-in" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
 
-      <Route path="root-layout" element={<RootLayout />}>
-        <Route index element={<Dashboard />} />
+      <Route path="root-layout" element={<SignIn />}>
+        <Route index element={<SignIn />} />
 
         <Route path="dashboard" element={<SignIn />} />
         <Route path="projects" element={<SignIn />} />
@@ -78,7 +77,7 @@ async function getUserDetails() {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await axios.get("http://localhost:3000/userDetails", {
+    const response = await axios.get("https://infra-jerusalem-2-server.vercel.app/userDetails", {
       headers: {
         Authorization: token,
       },
