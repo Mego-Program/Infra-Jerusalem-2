@@ -38,7 +38,7 @@ const textFieldStyles = {
   },
   "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline":
     {
-      borderColor: "#F6C927",
+      borderColor: "#F6C927 !important",
       color: "#F6C927",
     },
 };

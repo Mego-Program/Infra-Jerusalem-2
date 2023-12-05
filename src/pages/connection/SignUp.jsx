@@ -99,7 +99,7 @@ export default function SignUp() {
                 {["firstName", "lastName"].map((field) => (
                   <Grid item xs={6} key={field}>
                     <TextField
-                      autoComplete="off"
+                      autoComplete=""
                       name={field}
                       required
                       fullWidth
@@ -122,7 +122,7 @@ export default function SignUp() {
                   (field) => (
                     <Grid item xs={12} key={field}>
                       <TextField
-                        autoComplete="off"
+                        autoComplete=""
                         name={field}
                         required
                         fullWidth
@@ -227,7 +227,7 @@ const textFieldStyles = {
     color: "white",
   },
   "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#F6C927",
+    borderColor: "#F6C927 !important",
     color: "#F6C927",
   },
 };
