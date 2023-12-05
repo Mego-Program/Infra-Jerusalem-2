@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+
 import Dashboard from "./pages/mainMenu/Dashboard";
 import AddUser from "./pages/mainMenu/AddUser";
 import Settings from "./pages/mainMenu/Settings";
@@ -94,7 +95,6 @@ async function getUserDetails() {
   }
 }
 
-// Main App component that provides the router
 function App() {
   const [userDetails, setUserDetails] = useUserDetails();
   const [token, setTokenProvided] = useState(false);
