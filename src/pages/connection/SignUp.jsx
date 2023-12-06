@@ -230,7 +230,12 @@ const textFieldStyles = {
     borderColor: "#F6C927 !important",
     color: "#F6C927",
   },
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: "0 0 0 1000px #121231 inset",
+    WebkitTextFillColor: "white !important",
+  },
 };
+
 
 
 
