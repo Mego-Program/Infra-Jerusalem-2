@@ -38,7 +38,7 @@ function RootLayout({ window }) {
         const token = localStorage.getItem("token");
         if (token) {
           const response = await axios.get(
-            "http://localhost:3000/userDetails",
+            "https://infra-jerusalem-2-server.vercel.app/userDetails",
             {
               headers: {
                 Authorization: token,
@@ -63,6 +63,7 @@ function RootLayout({ window }) {
   const activeButton = (text) => {
     setTitle(text);
     setSelectedButton(text);
+    
   };
 
   // Toggle mobile drawer visibility
@@ -126,12 +127,13 @@ function RootLayout({ window }) {
       <AppBar
         position="fixed"
         sx={{
+          height: "75px",
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           padding: "5px 0px",
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ height: "70px" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -141,7 +143,15 @@ function RootLayout({ window }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" color="#F6C927">
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            color="#F6C927"
+            sx={{
+              display: { xs: "none", sm: "block" }, // Hide on small screens (xs)
+            }}
+          >
             {title}
           </Typography>
           <PrimarySearchAppBar />
@@ -150,7 +160,7 @@ function RootLayout({ window }) {
 
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 },}}
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
         {/* Mobile Drawer */}
         <Drawer
@@ -187,7 +197,7 @@ function RootLayout({ window }) {
       </Box>
 
       {/* Main content area */}
-      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width:'100%'}}>
+      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width: "100%" }}>
         <Outlet />
       </Box>
     </Box>

@@ -5,7 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
@@ -13,13 +12,24 @@ import Logout from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
+import { useNavigate } from "react-router-dom";
+
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigeteSignIn = useNavigate();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userDetails");
+    navigeteSignIn('/sign-in')
+
+  };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -176,7 +186,7 @@ export default function AccountMenu() {
           Settings
         </MenuItem>
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{
             "&:hover": {
               backgroundColor: "#21213E",

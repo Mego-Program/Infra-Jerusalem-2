@@ -51,7 +51,7 @@ export default function SignUp() {
 
       if (response.status === 200){
 
-        navigeteSignIn('/signIn')
+        navigeteSignIn('/sign-in')
 
 
       }
@@ -245,7 +245,12 @@ const textFieldStyles = {
     borderColor: "#F6C927",
     color: "#F6C927",
   },
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: "0 0 0 1000px #121231 inset",
+    WebkitTextFillColor: "white !important",
+  },
 };
+
 
 
 
