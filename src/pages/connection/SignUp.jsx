@@ -39,9 +39,6 @@ export default function SignUp() {
 
   const handleSubmit = async (verifiedDataForm) => {
     console.log(verifiedDataForm);
-    // verifiedDataForm.preventDefault();
-    // const formData = new FormData(verifiedDataForm);
-    // console.log(formData);
 
     try {
       const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
