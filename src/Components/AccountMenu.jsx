@@ -13,16 +13,30 @@ import Logout from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
+import MyProfile from "./MyProfile"; // Import the MyProfile component
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [myProfileOpen, setMyProfileOpen] = React.useState(false); // State for MyProfile component
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleMyProfileOpen = () => {
+    setMyProfileOpen(true);
+    handleClose();
+  };
+
+  const handleMyProfileClose = () => {
+    setMyProfileOpen(false);
+  };
+
   return (
     <React.Fragment>
       <Box
@@ -58,10 +72,12 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <BadgeAvatars />
+            {/* Assume you have a BadgeAvatars component here */}
+            {/* <BadgeAvatars /> */}
           </IconButton>
         </Tooltip>
       </Box>
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -101,7 +117,7 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem
-          onClick={handleClose}
+          onClick={handleMyProfileOpen} // Use handleMyProfileOpen to open MyProfile
           sx={{
             "&:hover": {
               backgroundColor: "#21213E",
@@ -193,6 +209,11 @@ export default function AccountMenu() {
           Logout
         </MenuItem>
       </Menu>
+      <MyProfile
+        open={myProfileOpen}
+        onClose={handleMyProfileClose}
+        selectedValue="someValue" // Provide an appropriate selectedValue
+      />
     </React.Fragment>
   );
 }

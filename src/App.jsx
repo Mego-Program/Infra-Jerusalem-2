@@ -23,11 +23,12 @@ import useUserDetails from "./atom/userAtom";
 import axios from "axios";
 import  Refresh  from "./pages/connection/Refresh";
 
+
 import MainProjects  from "project/AppProjects"; // cahnge to appProject
 // import AppCommunication from "communication/AppCommunication";
 import SpecsApp from "specs/SpecsApp"
 
-
+import {Cloudinary} from "@cloudinary/url-gen";
 
 const defaultRouter = createBrowserRouter(
   createRoutesFromElements(<Route path="*" element={<Refresh />} />)
@@ -129,6 +130,7 @@ async function getUserDetails(){
 
 // Main App component that provides the router
 function App() {
+  const cld = new Cloudinary({cloud: {cloudName: 'dne5dplkd'}});
   const [userDetails, setUserDetails] = useUserDetails();
   const [token,setTokenProvided] = useState(false)
   useLayoutEffect(()=>{
