@@ -15,7 +15,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import BadgeAvatars from "./BadgeAvatars";
 import AccountMenu from "./AccountMenu";
 
-
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,9 +60,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // Main component for the primary app bar
 export default function PrimarySearchAppBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, maxHeight: "70px" }}>
       <AppBar position="static" elevation={0}>
-        <Toolbar>
+        <Toolbar sx={{ maxHeight: "70px" }}>
           {/* Flex grow for spacing on the left */}
           <Box sx={{ flexGrow: 1 }} />
 
@@ -80,7 +79,10 @@ export default function PrimarySearchAppBar() {
 
           {/* Desktop view: User profile, notifications, and more */}
           <Box
-            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+            sx={{
+              display: { xs: "none", sm: "none", md: "flex" },
+              alignItems: "center",
+            }}
           >
             <Box
               sx={{
@@ -90,6 +92,7 @@ export default function PrimarySearchAppBar() {
                 backgroundColor: "#121231",
                 borderRadius: "10px",
                 padding: 0,
+                maxHeight: "65px",
               }}
             >
               {/* User profile */}
@@ -97,7 +100,16 @@ export default function PrimarySearchAppBar() {
                 sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
               >
                 <BadgeAvatars />
-                <Box>
+                <Box
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "none",
+                      md: "none",
+                      lg: "block",
+                    },
+                  }}
+                >
                   <Typography variant="body2" sx={{ color: "white", mb: 0 }}>
                     <b> Emma Taylor </b>
                   </Typography>
@@ -108,25 +120,33 @@ export default function PrimarySearchAppBar() {
               </Box>
 
               {/* Notifications */}
-              <IconButton
-                size="large"
-                aria-label="10"
-                color="inherit"
-                sx={{ bgcolor: "#21213E" }}
-              >
-                <Badge badgeContent={10} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-
+              <Box>
+                <IconButton
+                  size="large"
+                  aria-label="10"
+                  color="inherit"
+                  sx={{ bgcolor: "#21213E" }}
+                >
+                  <Badge badgeContent={10} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Box>
               {/* More options */}
-              <IconButton
-                size="large"
-                color="inherit"
-                sx={{bgcolor: "#21213E", m: "1vh", width:"48px", height:"48px" }}
-              >
-                <AccountMenu/>
-              </IconButton>
+              <Box>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  sx={{
+                    bgcolor: "#21213E",
+                    m: "1vh",
+                    width: "48px",
+                    height: "48px",
+                  }}
+                >
+                  <AccountMenu />
+                </IconButton>
+              </Box>
             </Box>
           </Box>
 
@@ -137,9 +157,8 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-haspopup="true"
               color="inherit"
-              
             >
-              <AccountMenu/>
+              <AccountMenu />
             </IconButton>
           </Box>
         </Toolbar>

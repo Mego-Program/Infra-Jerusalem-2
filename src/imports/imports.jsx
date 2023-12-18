@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
+import Refresh from "../pages/connection/Refresh"
 
 // Dynamic import function for MainProjects
 export function DynamicMainProjects() {
@@ -31,7 +32,7 @@ function DynamicImport(loader) {
     return <Alert severity="error">Failed to load component: {error.message}</Alert>;
   }
 
-  return Component ? <Component /> : <div>Loading...</div>;
+  return Component ? <Component /> : <Refresh/>;
 }
 
 

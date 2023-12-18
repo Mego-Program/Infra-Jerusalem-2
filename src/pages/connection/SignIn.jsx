@@ -41,6 +41,10 @@ const textFieldStyles = {
       borderColor: "#F6C927 !important",
       color: "#F6C927",
     },
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: "0 0 0 1000px #121231 inset",
+    WebkitTextFillColor: "white !important",
+  },
 };
 
 const buttonStyles = {
@@ -85,16 +89,19 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const response = await axios.post("http://localhost:3000/signin", {
-        email: data.get("email"),
-        password: data.get("password"),
-      });
+      const response = await axios.post(
+        "https://infra-jerusalem-2-server.vercel.app/signin",
+        {
+          email: data.get("email"),
+          password: data.get("password"),
+        }
+      );
       if (response.status === 200) {
         console.log(response);
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
 
-        navigateRootLayout("/rootLayout");
+        navigateRootLayout("/root-layout");
       }
     } catch (error) {
       console.error(error);
@@ -158,7 +165,6 @@ export default function SignIn() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="off"
                 autoFocus
                 sx={textFieldStyles}
               />

@@ -26,7 +26,7 @@ export default function SignUp() {
     const formData = new FormData(event.currentTarget);
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
+      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
         userName: formData.get("username"),
@@ -36,7 +36,7 @@ export default function SignUp() {
 
       if (response.status === 200){
 
-        navigeteSignIn('/signIn')
+        navigeteSignIn('/sign-in')
 
 
       }
@@ -230,7 +230,12 @@ const textFieldStyles = {
     borderColor: "#F6C927 !important",
     color: "#F6C927",
   },
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: "0 0 0 1000px #121231 inset",
+    WebkitTextFillColor: "white !important",
+  },
 };
+
 
 
 
