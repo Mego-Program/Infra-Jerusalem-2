@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import App from "./App.jsx";
 import "./index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -27,13 +27,12 @@ const theme = createTheme({
 
 // Rendering the main App component in a root element
 ReactDOM.createRoot(document.getElementById("R")).render(
+  <GoogleOAuthProvider clientId="1051094080273-ud1o37boptetpriu373ocur2hkv335ho.apps.googleusercontent.com">
   <React.StrictMode>
-    {/* Providing the custom theme to the entire app */}
     <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      {/* Main App component */}
       <App />
     </ThemeProvider>
   </React.StrictMode>
+  </GoogleOAuthProvider>
 );

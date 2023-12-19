@@ -1,6 +1,8 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { useState } from "react";
+import useUserDetails from "../atom/userAtom";
+
 import {
   AppBar,
   Box,
@@ -59,9 +61,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // Main component for the primary app bar
 export default function PrimarySearchAppBar() {
+  const [userDetails, setUserDetails] = useUserDetails();
+
   return (
     <Box sx={{ flexGrow: 1, maxHeight: "70px" }}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position="static" elevation={0} sx={{ maxHeight: "70px" }}>
         <Toolbar sx={{ maxHeight: "70px" }}>
           {/* Flex grow for spacing on the left */}
           <Box sx={{ flexGrow: 1 }} />
@@ -111,7 +115,7 @@ export default function PrimarySearchAppBar() {
                   }}
                 >
                   <Typography variant="body2" sx={{ color: "white", mb: 0 }}>
-                    <b> Emma Taylor </b>
+                    <b>{userDetails.userName}</b>
                   </Typography>
                   <Typography variant="caption" sx={{ color: "white", mb: 0 }}>
                     UX/UI Designer
