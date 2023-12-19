@@ -13,7 +13,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
-
+import MyProfile from './MyProfile'
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -144,26 +144,7 @@ export default function AccountMenu() {
         >
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          sx={{
-            "&:hover": {
-              backgroundColor: "#21213E",
-              color: "#F6C927",
-              "& .MuiAvatar-root": {
-                backgroundColor: "#21213E",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#F6C927",
-              },
-            },
-            "& .MuiAvatar-root": {
-              backgroundColor: "#121231",
-            },
-          }}
-        >
-          <Avatar /> My account
-        </MenuItem>
+       
         <Divider />
         <MenuItem
           onClick={handleClose}

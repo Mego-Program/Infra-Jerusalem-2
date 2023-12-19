@@ -24,9 +24,17 @@ import MainProjects from "project/AppProjects";
 import AppCommunication from "communication/AppCommunication";
 import SpecsApp from "specs/SpecsApp";
 
-// const defaultRouter = createBrowserRouter(
-//   createRoutesFromElements(<Route path="*" element={<Suspense fallback={<Refresh/>}></Suspense>} />)
-// );
+
+// import MainProjects  from "project/AppProjects"; // cahnge to appProject
+// import AppCommunication from "communication/AppCommunication";
+// import SpecsApp from "specs/SpecsApp"
+
+import {Cloudinary} from "@cloudinary/url-gen";
+
+const defaultRouter = createBrowserRouter(
+  createRoutesFromElements(<Route path="*" element={<Refresh />} />)
+);
+// Creating a router using react-router-dom
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
@@ -123,8 +131,7 @@ function App() {
 
   return (
     <RouterProvider
-      router={router }
-    />
+    router={token ? router : token === false ? invalidRouter : defaultRouter} />
   );
 }
 
