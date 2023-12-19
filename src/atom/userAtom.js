@@ -1,12 +1,7 @@
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom } from "jotai";
 
+const userDetails = atom({});
 
-const userDetails= atom({});
+const useUserDetails = () => useAtom(userDetails);
 
-const useUserDetails =() => useAtom(userDetails);
-
-
-
-
-
-export default useUserDetails
+export default useUserDetails;
