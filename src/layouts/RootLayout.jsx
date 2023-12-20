@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useLayoutEffect, useEffect } from "react";
-
+import { useEffect,useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
@@ -17,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { linksBottom, linksTop } from "../Components/Arr_Icons.jsx";
 import PrimarySearchAppBar from "../Components/PrimarySearchAppBar.jsx";
 import axios from "axios";
@@ -25,45 +24,28 @@ import { Token } from "@mui/icons-material";
 
 const drawerWidth = 220;
 
-// Functional component for the root layout
 function RootLayout({ window }) {
   // State variables
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [title, setTitle] = React.useState("Dashboard");
-  const [selectedButton, setSelectedButton] = React.useState("Dashboard");
 
-  useLayoutEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await axios.get(
-            "https://infra-jerusalem-2-server.vercel.app/userDetails",
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
-          if (response.status !== 200) {
-            return <Navigate to="/" replace={true} />;
-          }
-        } else {
-          return <Navigate to="/" replace={true} />;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const location = useLocation();
 
-    fetchUser();
-  }, []);
+
+
 
   // Function to set the active button and title
-  const activeButton = (text) => {
-    setTitle(text);
-    setSelectedButton(text);
-    
+  const activeButton = () => {
+    // Extract the active button from the pathname
+    const path = location.pathname;
+    const parts = path.split("/");
+    const activeButton = parts.length > 2 ? parts[2] : "dashboard"; // Set default to "dashboard" if not found
+    setTitle(
+      activeButton
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    );
   };
 
   // Toggle mobile drawer visibility
@@ -73,21 +55,21 @@ function RootLayout({ window }) {
   const renderLinks = (links, marginLeft = "0vh") => (
     <List sx={{ flex: 1, marginLeft }}>
       {links.map(({ to, text, icon }, index) => (
-        <NavLink key={index} to={to} style={{ textDecoration: "none" }}>
+        <NavLink key={index} to={to} style={{ textDecoration: "none"}}>
           <ListItem>
             <ListItemButton
-              onClick={() => activeButton(text)}
+              onClick={() => activeButton()}
               sx={{
                 backgroundColor:
-                  selectedButton === text ? "#F6C927" : "#121231",
+                  title === text ? "#F6C927" : "#121231",
                 color: "white",
                 borderRadius: "7px",
                 border: "solid 1px #121231",
                 "&:hover": {
                   backgroundColor:
-                    selectedButton === text ? "#F6C927" : "#21213E",
+                    title === text ? "#F6C927" : "#21213E",
                   border:
-                    selectedButton === text
+                    title === text
                       ? "solid 1px #121231"
                       : "solid 1px #F6C927",
                 },
@@ -120,6 +102,11 @@ function RootLayout({ window }) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  // Use useEffect instead of useLayoutEffect
+  useEffect(() => {
+    activeButton();
+  }, [location.pathname]);
+
   // JSX for the root layout
   return (
     <Box sx={{ display: "flex", bgcolor: "#21213E", minHeight: "100vh" }}>
@@ -133,29 +120,32 @@ function RootLayout({ window }) {
           padding: "5px 0px",
         }}
       >
-        <Toolbar sx={{ height: "70px" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            color="#F6C927"
-            sx={{
-              display: { xs: "none", sm: "block" }, // Hide on small screens (xs)
-            }}
-          >
-            {title}
-          </Typography>
-          <PrimarySearchAppBar />
-        </Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: "70px" }}>
+  <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+    <IconButton
+      color="inherit"
+      aria-label="open drawer"
+      edge="start"
+      onClick={handleDrawerToggle}
+      sx={{ mr: 2, display: { sm: "none" } }}
+    >
+      <MenuIcon />
+    </IconButton>
+    <Typography
+      variant="h6"
+      noWrap
+      component="div"
+      color="#F6C927"
+      sx={{
+        display: { xs: "none", sm: "block" },
+      }}
+    >
+      {title}
+    </Typography>
+  </Box>
+  <PrimarySearchAppBar sx={{ flex: "0 1 auto" }} />
+</Toolbar>
+
       </AppBar>
 
       <Box

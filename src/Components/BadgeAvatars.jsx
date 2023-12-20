@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useDropzone } from "react-dropzone";
-import axios from "axios";
-
+import { Button } from "@mui/material";
+import useUserDetails from "../atom/userAtom";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -17,92 +12,29 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function BadgeAvatars() {
-  // const [altName, setAltName] = useState("")
+export default function BadgeAvatars({img}) {
   const [invisible, setInvisible] = useState(false);
-  const userName = "M"
-  const [uploadedImage, setUploadedImage] = useState(
-    "https://example.com/default-face-image.jpg"
-  );
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [userDetails, setUserDetails] = useUserDetails();
 
-  const onDrop = async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "your_cloudinary_upload_preset");
-
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/your_cloudinary_cloud_name/image/upload",
-        formData
-      );
-
-      const imageUrl = response.data.secure_url;
-      setUploadedImage(imageUrl);
-
-      // Save imageUrl to your database or perform other actions
-      // e.g., send it to the server via API
-      console.log("Image URL:", imageUrl);
-    } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
-    }
-  };
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
-    onDrop,
-  });
-
-  const handleBadgeVisibility = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleUploadPicture = () => {
-    const input = document.getElementById("image-input");
-    input.click();
-    handleClose();
-  };
-
-  const handleDeleteImage = () => {
-    setUploadedImage("https://example.com/default-face-image.jpg");
-    handleClose();
-  };
 
   return (
-    <div>
-      <Button
-        {...getRootProps()}
-        sx={{ marginRight: "2vh", position: "relative" }}
-        onClick={handleBadgeVisibility}
+    <Button sx={{ marginRight: "2vh" }}>
+      <StyledBadge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        variant="dot"
+        invisible={invisible}
       >
-        <StyledBadge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-          invisible={invisible}
-        >
-          <Avatar alt={userName} src={uploadedImage} />
-        </StyledBadge>
-        <input
-          {...getInputProps()}
-          id="image-input"
-          style={{ display: "none" }}
+        <Avatar
+          alt={userDetails.userName}
+          src={img || getInitials(userDetails.userName)}
         />
-      </Button>
-
-      {uploadedImage && (
-        <Button
-          onClick={handleDeleteImage}
-          style={{ position: "absolute", top: 0, right: 0 }}
-        >
-          {/* <DeleteIcon /> */}
-        </Button>
-      )}
-    </div>
+      </StyledBadge>
+    </Button>
   );
+}
+
+// Helper function to get initials from a username
+function getInitials(username) {
+  return username ? username.charAt(0).toUpperCase() : "";
 }

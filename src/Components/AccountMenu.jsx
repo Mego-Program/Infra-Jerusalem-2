@@ -13,6 +13,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
+import MyProfile from './MyProfile';
+import useUserDetails from "../atom/userAtom";
 
 
 export default function AccountMenu() {
@@ -20,6 +22,8 @@ export default function AccountMenu() {
   const navigeteSignIn = useNavigate();
 
   const open = Boolean(anchorEl);
+  const [myProfileOpen, setMyProfileOpen] = React.useState(false); // State for MyProfile component
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,6 +37,16 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleMyProfileOpen = () => {
+    setMyProfileOpen(true);
+    handleClose();
+  };
+
+  const handleMyProfileClose = () => {
+    setMyProfileOpen(false);
+  };
+
   return (
     <React.Fragment>
       <Box
@@ -68,10 +82,12 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <BadgeAvatars />
+            {/* Assume you have a BadgeAvatars component here */}
+            {/* <BadgeAvatars /> */}
           </IconButton>
         </Tooltip>
       </Box>
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -111,7 +127,7 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem
-          onClick={handleClose}
+          onClick={handleMyProfileOpen} // Use handleMyProfileOpen to open MyProfile
           sx={{
             "&:hover": {
               backgroundColor: "#21213E",
@@ -130,26 +146,7 @@ export default function AccountMenu() {
         >
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          sx={{
-            "&:hover": {
-              backgroundColor: "#21213E",
-              color: "#F6C927",
-              "& .MuiAvatar-root": {
-                backgroundColor: "#21213E",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#F6C927",
-              },
-            },
-            "& .MuiAvatar-root": {
-              backgroundColor: "#121231",
-            },
-          }}
-        >
-          <Avatar /> My account
-        </MenuItem>
+       
         <Divider />
         <MenuItem
           onClick={handleClose}
@@ -203,6 +200,11 @@ export default function AccountMenu() {
           Logout
         </MenuItem>
       </Menu>
+      <MyProfile
+        open={myProfileOpen}
+        onClose={handleMyProfileClose}
+        selectedValue="someValue" // Provide an appropriate selectedValue
+      />
     </React.Fragment>
   );
 }

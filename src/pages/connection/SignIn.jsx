@@ -62,7 +62,7 @@ const buttonStyles = {
   },
   "& input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill:active":
     {
-      WebkitBoxShadow: "0 0 0 30px #121231 inset !important",
+      WebkitBoxShadow: "0 0 0 30px #21213E inset !important",
       WebkitTextFillColor: "white !important",
     },
 };
@@ -117,12 +117,20 @@ export default function SignIn() {
           <CssBaseline />
           <Box
             sx={{
+              borderRadius:"10px",
+              paddingTop:"25px",
+              p:"20px",
+              height:"450px",
+              width:"100%",
+              bgcolor:"#21213E",
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
             }}
           >
+                      <Box sx={{mb:"10px"}}>
+
             <svg
               width="50px"
               height="50px"
@@ -133,7 +141,7 @@ export default function SignIn() {
               <path
                 d="M44.2397 2.69504L43.5 2.27581L42.7603 2.69504L22.5328 14.16L22.5225 14.1659L22.5122 14.1719L2.46952 25.957L1.73663 26.3879L1.72987 27.2381L1.54505 50.4881L1.54495 50.5L1.54505 50.5119L1.72987 73.7619L1.73663 74.6121L2.46952 75.043L22.5122 86.8281L22.5225 86.8341L22.5328 86.84L42.7603 98.305L43.5 98.7242L44.2397 98.305L64.4671 86.84L64.4775 86.8341L64.4878 86.8281L84.5305 75.043L85.2634 74.6121L85.2701 73.7619L85.455 50.5119L85.455 50.5L85.455 50.4881L85.2701 27.2381L85.2634 26.3879L84.5305 25.957L64.4878 14.1719L64.4775 14.1659L64.4671 14.16L44.2397 2.69504Z"
                 stroke="#F6C927"
-                stroke-width="3"
+                strokeWidth="3"
               />
               <path
                 d="M36.2897 60.414L22 54.0032V48.4682L36.2897 42.0573V47.3471L23.6422 52.742V49.7293L36.2897 55.1242V60.414Z"
@@ -148,6 +156,7 @@ export default function SignIn() {
                 fill="#F6C927"
               />
             </svg>
+            </Box>
 
             <Typography component="h1" variant="h5">
               Sign In
@@ -206,8 +215,8 @@ export default function SignIn() {
                   </NavLink>
                 </Grid>
                 <Grid item>
-                  <NavLink to="/sign-up" style={{ color: "#F6C927" }}>
-                    {"Don't have an account? Sign Up"}
+                  <NavLink to="/" style={{ color: "#F6C927" }}>
+                    {"No account? Home Page"}
                   </NavLink>
                 </Grid>
               </Grid>
@@ -217,7 +226,7 @@ export default function SignIn() {
         <Typography
           variant="body2"
           align="center"
-          sx={{ mt: 5, color: "white" }}
+          sx={{ mt: 5, color: "#ffffff63" }}
         >
           {"Copyright © "}
           <Link color="inherit" href="https://mui.com/">

@@ -1,4 +1,15 @@
-html{
-    background-color: #21213E;
+html {
+  background-color: #21213e;
+}
 
+.customNavLink {
+  text-decoration: none !important;
+  width: 200px !important;
+  height: 200px !important;
+  color: green !important;
+}
+
+.customNavLink.active {
+  background-color: red !important;
+  color: white !important;
 }
