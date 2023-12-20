@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
@@ -16,46 +17,74 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { NavLink, useNavigate } from "react-router-dom";
 import { userSchema } from "../../validations/UserValidation";
 import { Password } from "@mui/icons-material";
-
 const theme = createTheme();
 
 export default function SignUp() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
+  const [isFirstNameError, setIsFirstNameError] = useState(false);
+  const [isLastNameError, setIsLastNameError] = useState(false);
+  const [isUsernameError, setIsUsernameError] = useState(false);
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isVerifyPasswordError, setIsVerifyPasswordError] = useState(false);
+
+  const handleInputChange = (event, setState, setErrorState) => {
+    const value = event.target.value;
+    setState(value);
+  
+    // Reset error state when the input becomes correct
+    if (setErrorState && typeof setErrorState === "function") {
+      setErrorState(false);
+    }
+  };
 
   const createUser = async (event) => {
     event.preventDefault();
-    let formDtatValid = {
-      firstName: event.target.firstName.value,
-      lastName: event.target.lastName.value,
-      username: event.target.username.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
+    // Validation logic before submitting the form
+    const isValid = await userSchema.isValid({
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+    });
+
+    if (isValid && password === verifyPassword) {
+      handleSubmit({
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+      });
+    } else {
+      // Handle invalid form or password mismatch
     }
-    const isValid = await userSchema.isValid(formDtatValid);
-    console.log(isValid);
-    if(isValid && event.target.verifyPassword.value===event.target.password.value ){handleSubmit(formDtatValid)}
-  }
+  };
 
   const navigeteSignIn = useNavigate();
 
   const handleSubmit = async (verifiedDataForm) => {
-    console.log(verifiedDataForm);
-
     try {
-      const response = await axios.post("https://infra-jerusalem-2-server.vercel.app/signup", {
-        firstName: verifiedDataForm.firstName,
-        lastName: verifiedDataForm.lastName,
-        userName: verifiedDataForm.username,
-        password: verifiedDataForm.password,
-        email: verifiedDataForm.email,
-      });
+      const response = await axios.post(
+        "https://infra-jerusalem-2-server.vercel.app/signup",
+        {
+          firstName: verifiedDataForm.firstName,
+          lastName: verifiedDataForm.lastName,
+          userName: verifiedDataForm.username,
+          password: verifiedDataForm.password,
+          email: verifiedDataForm.email,
+        }
+      );
 
-      if (response.status === 200){
-
-        navigeteSignIn('/sign-in')
-
-
+      if (response.status === 200) {
+        navigeteSignIn("/sign-in");
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -128,8 +157,30 @@ export default function SignUp() {
                         },
                       }}
                       sx={{
+                        borderColor:
+                          field === "firstName"
+                            ? isFirstNameError
+                              ? "red"
+                              : "white"
+                            : isLastNameError
+                            ? "red"
+                            : "white",
                         ...textFieldStyles,
                       }}
+                      error={
+                        field === "firstName"
+                          ? isFirstNameError
+                          : isLastNameError
+                      }
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          field === "firstName" ? setFirstName : setLastName,
+                          field === "firstName"
+                            ? setIsFirstNameError
+                            : setIsLastNameError
+                        )
+                      }
                     />
                   </Grid>
                 ))}
@@ -162,45 +213,63 @@ export default function SignUp() {
                           },
                         }}
                         sx={{
+                          borderColor:
+                            field === "username"
+                              ? isUsernameError
+                                ? "red"
+                                : "white"
+                              : field === "email"
+                              ? isEmailError
+                                ? "red"
+                                : "white"
+                              : field === "password"
+                              ? isPasswordError
+                                ? "red"
+                                : "white"
+                              : field === "verifyPassword"
+                              ? isVerifyPasswordError
+                                ? "red"
+                                : "white"
+                              : "white",
                           ...textFieldStyles,
+                        }}
+                        error={
+                          field === "username"
+                            ? isUsernameError
+                            : field === "email"
+                            ? isEmailError
+                            : field === "password"
+                            ? isPasswordError
+                            : field === "verifyPassword"
+                            ? isVerifyPasswordError
+                            : false
+                        }
+                        onChange={(e) => {
+                          switch (field) {
+                            case "username":
+                              handleInputChange(e, setUsername, setIsUsernameError);
+                              break;
+                            case "email":
+                              handleInputChange(e, setEmail, setIsEmailError);
+                              break;
+                            case "password":
+                              handleInputChange(e, setPassword, setIsPasswordError);
+                              break;
+                            case "verifyPassword":
+                              handleInputChange(
+                                e,
+                                setVerifyPassword,
+                                setIsVerifyPasswordError
+                              );
+                              break;
+                            default:
+                              break;
+                          }
                         }}
                       />
                     </Grid>
                   )
                 )}
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="allowExtraEmails"
-                        sx={{
-                          color: "white",
-                          "&.Mui-checked": {
-                            color: "#F6C927",
-                          },
-                        }}
-                      />
-                    }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  ...buttonStyles,
-                }}
-              >
-                Sign Up
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <NavLink to="/sign-in" style={{ color: "#F6C927" }}>
-                    Already have an account? Sign in
-                  </NavLink>
-                </Grid>
               </Grid>
             </Box>
           </Box>
@@ -251,9 +320,6 @@ const textFieldStyles = {
   },
 };
 
-
-
-
 const buttonStyles = {
   mt: 3,
   mb: 2,
@@ -262,11 +328,9 @@ const buttonStyles = {
   "&:hover": {
     backgroundColor: "#21213E",
     borderColor: "#F6C927",
-
   },
   "&.Mui-focusVisible": {
     backgroundColor: "#21213E",
     borderColor: "#F6C927",
   },
 };
-
