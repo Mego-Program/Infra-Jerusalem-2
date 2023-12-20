@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect,useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
@@ -30,6 +30,9 @@ function RootLayout({ window }) {
   const [title, setTitle] = React.useState("Dashboard");
 
   const location = useLocation();
+
+
+
 
   // Function to set the active button and title
   const activeButton = () => {

@@ -13,7 +13,9 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
-import MyProfile from './MyProfile'
+import MyProfile from './MyProfile';
+import useUserDetails from "../atom/userAtom";
+
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);

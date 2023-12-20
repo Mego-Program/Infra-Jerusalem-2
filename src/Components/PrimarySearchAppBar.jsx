@@ -1,8 +1,8 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { useState } from "react";
+import { useState,useLayoutEffect } from "react";
 import useUserDetails from "../atom/userAtom";
-
+import axios from "axios";
 import {
   AppBar,
   Box,
@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import BadgeAvatars from "./BadgeAvatars";
 import AccountMenu from "./AccountMenu";
-
+import { useNavigate } from "react-router";
 // Styled components for the search bar
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,7 +61,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // Main component for the primary app bar
 export default function PrimarySearchAppBar() {
-  const [userDetails, setUserDetails] = useUserDetails();
+  const [userDetails, setUserDetails] = useState({});
+
+  const [img, setImg] = useState("");
+
+  const navigation = useNavigate()
+
+  const fetchUserDetails = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+
+      const response = await axios.get(
+        "https://infra-jerusalem-2-server.vercel.app/userDetails",
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        localStorage.setItem("userDetails", JSON.stringify(response.data));
+        setImg(response.data.img)
+        setUserDetails(response.data)
+      }
+      else{
+        
+        navigation('/sign-in')
+
+      }
+    } catch (error) {
+      console.log(error);
+      navigation('/sign-in')
+    }
+  };
+
+  useLayoutEffect(() => {
+    fetchUserDetails();
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1, maxHeight: "70px" }}>
@@ -103,7 +141,7 @@ export default function PrimarySearchAppBar() {
               <Box
                 sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
               >
-                <BadgeAvatars />
+                <BadgeAvatars img={img}/>
                 <Box
                   sx={{
                     display: {

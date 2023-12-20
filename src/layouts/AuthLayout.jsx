@@ -11,24 +11,22 @@ export default function AuthLayout() {
     let googleToken = response.credential;
 
     try {
-      console.log(googleToken);
+      
       const response = await axios.post(
-        "https://infra-jerusalem-2-server.vercel.app/googlelogin",{}, {
+        "https://infra-jerusalem-2-server.vercel.app/googlelogin",
+        {},
+        {
           headers: {
             Authorization: googleToken,
           },
         }
-
-        
-   
-       
       );
 
       if (response.status === 200) {
         const token = response.data.token;
 
-        await localStorage.setItem("token", token);
-        await navigateRootLayout("/root-layout");
+        localStorage.setItem("token", token);
+        navigateRootLayout("/root-layout");
       }
     } catch (error) {
       console.log(error);
@@ -143,6 +141,8 @@ export default function AuthLayout() {
             p: "0px",
             display: "flex",
             flexDirection: "column",
+            alignItems:"center",
+            justifyContent:"center",
             width: "100%",
           }}
         >
@@ -155,8 +155,7 @@ export default function AuthLayout() {
               width: "100%",
             }}
           >
-            <Box sx={{ margin: "30px", width: "40%", maxHeight: "60px" }}>
-              {/* Sign In link */}
+            <Box sx={{ margin: "30px", width: "40%", maxHeight: "50px" }}>
               <NavLink to="sign-in" style={{ color: "#F6C927" }}>
                 <Button
                   sx={{
@@ -171,7 +170,7 @@ export default function AuthLayout() {
                 </Button>
               </NavLink>
             </Box>
-            <Box sx={{ margin: "30px", width: "40%", height: "60px" }}>
+            <Box sx={{ margin: "30px", width: "40%", height: "50px" }}>
               <NavLink to="sign-up" style={{ color: "#F6C927" }}>
                 <Button
                   sx={{
@@ -182,14 +181,19 @@ export default function AuthLayout() {
                     "&:hover": { bgcolor: "#21213E" },
                   }}
                 >
-                  {/* Sign Up link */}
                   <h2 style={{ color: "white" }}>Sign Up</h2>
                 </Button>
               </NavLink>
             </Box>
           </Box>
-          <Box sx={{ textAlign: "center" }}>
-            <h5>----- &nbsp;&nbsp;   OR &nbsp;&nbsp;  -----</h5>
+          <Box sx={{p:"10px", textAlign: "center",display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center", width:"100%",}}>
+            <Box
+              sx={{ border: "solid 0.5px white", width: "15%", height: "20%" }}
+            ></Box>
+            <h4>&nbsp;&nbsp; OR &nbsp;&nbsp;</h4>
+            <Box
+              sx={{ border: "solid 0.5px white", width: "15%", height: "20%" }}
+            ></Box>
           </Box>
 
           <Box

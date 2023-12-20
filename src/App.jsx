@@ -13,6 +13,7 @@ import NotFound from "./pages/mainMenu/NotFound";
 import SignIn from "./pages/connection/SignIn";
 import SignUp from "./pages/connection/SignUp";
 import { useState, useEffect, useLayoutEffect, startTransition } from "react";
+import { useNavigate } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import useUserDetails from "./atom/userAtom";
@@ -22,17 +23,18 @@ import { Suspense } from "react";
 import MainProjects from "project/AppProjects";
 import AppCommunication from "communication/AppCommunication";
 import SpecsApp from "specs/SpecsApp";
-
-
-// import MainProjects  from "project/AppProjects"; // cahnge to appProject
-// import AppCommunication from "communication/AppCommunication";
-// import SpecsApp from "specs/SpecsApp"
-
-import {Cloudinary} from "@cloudinary/url-gen";
+import Verify from "./pages/connection/Verify";
 
 const defaultRouter = createBrowserRouter(
   createRoutesFromElements(<Route path="*" element={<Refresh />} />)
 );
+
+
+
+
+
+
+
 // Creating a router using react-router-dom
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -82,14 +84,16 @@ const invalidRouter = createBrowserRouter(
       <Route path="verify" element={<Verify />} />
 
       <Route path="root-layout" element={<SignIn />}>
-        <Route index element={<SignIn />} />
+        <Route index element={<Dashboard />} />
 
-        <Route path="dashboard" element={<SignIn />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<SignIn />} />
         <Route path="board" element={<SignIn />} />
         <Route path="add-user" element={<SignIn />} />
         <Route path="messages" element={<SignIn />} />
         <Route path="settings" element={<SignIn />} />
+
+        {/* Change route behavior for "info" */}
         <Route path="info" element={<SignIn />} />
       </Route>
 
@@ -98,75 +102,12 @@ const invalidRouter = createBrowserRouter(
   )
 );
 
-async function getUserDetails() {
-  try {
-    const token = localStorage.getItem("token");
-
-    const response = await axios.get(
-      "https://infra-jerusalem-2-server.vercel.app/userDetails",
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    console.log(response);
-
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      console.log("no token");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
 function App() {
-  const cld = new Cloudinary({cloud: {cloudName: 'dne5dplkd'}});
-  const [userDetails, setUserDetails] = useUserDetails();
-  const [loading, setLoading] = useState(true);
-
-  const fetchUserDetails = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      const response = await axios.get(
-        "https://infra-jerusalem-2-server.vercel.app/userDetails",
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setUserDetails(response.data);
-      }
-
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
-  useLayoutEffect(() => {
-    fetchUserDetails();
-  }, []);
-
-  if (loading) {
-    return;
-  }
 
 
   return (
     <RouterProvider
-      router={userDetails ? router : invalidRouter}
+    router={router}
     />
   );
 }

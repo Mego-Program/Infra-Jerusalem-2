@@ -1,10 +1,9 @@
 import { Try } from "@mui/icons-material";
 import { useEffect, useRef } from "react";
 import axios from "axios";
-
+import PrimarySearchAppBar from "./PrimarySearchAppBar";
 const uploadImg = async (url) => {
     const token = localStorage.getItem('token');
-    console.log(token);
     try {
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/uploadimg",
@@ -18,7 +17,7 @@ const uploadImg = async (url) => {
         }
       );
       if (response.status === 200) {
-        console.log(response);
+        return <PrimarySearchAppBar/>
       }
     } catch (error) {
       console.log(error);
