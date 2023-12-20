@@ -31,7 +31,7 @@ export default function SignUp() {
       password: event.target.password.value,
     }
     const isValid = await userSchema.isValid(formDtatValid);
-  
+    console.log(isValid);
     if(isValid && event.target.verifyPassword.value===event.target.password.value ){handleSubmit(formDtatValid)}
   }
 
@@ -269,3 +269,4 @@ const buttonStyles = {
     borderColor: "#F6C927",
   },
 };
+
