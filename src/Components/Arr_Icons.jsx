@@ -11,9 +11,8 @@ import Badge from "@mui/material/Badge";
 // Array of icons for the first set of links
 export const linksTop = [
   { to: "dashboard", icon: <SpeedIcon />, text: "Dashboard" },
-  { to: "projects", icon: <FeedOutlinedIcon />, text: "Projects" },
-  { to: "board", icon: <BrokenImageOutlinedIcon />, text: "Board" },
-  { to: "add-user", icon: <PersonAddAltOutlinedIcon />, text: "Add User" },
+  { to: "board", icon: <FeedOutlinedIcon />, text: "Board" },
+  { to: "specs", icon: <BrokenImageOutlinedIcon />, text: "Specs" },
   {
     to: "messages",
     icon: (

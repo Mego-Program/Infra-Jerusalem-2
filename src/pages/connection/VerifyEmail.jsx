@@ -16,7 +16,6 @@ const theme = createTheme();
 const isLength = (value) => value.length === 5;
 const validateCode = (value) => isLength(value);
 
-
 export default function Verify() {
   const navigateVerify = useNavigate();
   const [code, setCode] = useState("");
@@ -31,25 +30,26 @@ export default function Verify() {
     setCodeError(validateCode(value) ? "" : "Code must have 5 digits");
   };
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      console.log(email);
+
       const response = await axios.post(
-        "https://infra-jerusalem-2-server.vercel.app/verifyemail",
+        "https://infra-jerusalem-2-server.vercel.app/verifyemailcode",
         { code: code, email: email }
       );
 
       if (response.status === 200) {
-        navigateVerify("/sign-in");
+        const token = response.data.token;
+        localStorage.setItem("token", response.data.token);
+        navigateVerify("/new-password");
       }
     } catch (error) {
-      if(error.response.status === 401 || error.response.status === 500){
-        setIsCodeValid(false)
-        setCodeError(error.response.data)
-
+      if (error.response.status === 401 || error.response.status === 500) {
+        setIsCodeValid(false);
+        setCodeError(error.response.data);
       }
       console.error(error);
     }
@@ -66,7 +66,7 @@ export default function Verify() {
               borderRadius: "10px",
               paddingTop: "25px",
               p: "20px",
-              height: "400px",
+              height: "350px",
               width: "100%",
               bgcolor: "#21213E",
               mt: 8,
@@ -109,7 +109,7 @@ export default function Verify() {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3, width:"80%"}}
+              sx={{ mt: 3, width: "80%" }}
             >
               <TextField
                 autoComplete=""
@@ -127,10 +127,8 @@ export default function Verify() {
                   },
                 }}
                 sx={{
-                  mt:"1",
-                  ...(isCodeValid
-                    ? textFieldStyles
-                    : invalidTextFieldStyles),
+                  mt: "1",
+                  ...(isCodeValid ? textFieldStyles : invalidTextFieldStyles),
                 }}
               />
               <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
@@ -157,13 +155,6 @@ export default function Verify() {
               >
                 Send
               </Button>
-              <Grid container>
-                <Grid item="true" sx={{pt:"10px"}}>
-                  <NavLink to="/sign-up" style={{ color: "#F6C927",}}>
-                    {"Sign Up"}
-                  </NavLink>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Container>

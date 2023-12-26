@@ -14,6 +14,29 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { NavLink, useNavigate } from "react-router-dom";
 import useUserEmail from "../../atom/emailAtom";
 
+// Assuming the existence of these utility functions
+const isString = (value) =>
+  value.length >= 1 && typeof value === "string" && isNaN(Number(value));
+const isEmail = (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) &&
+  value.indexOf("@") < value.lastIndexOf(".");
+const isPassword = (value) => {
+  return (
+    /[a-z]/.test(value) &&
+    /[A-Z]/.test(value) &&
+    /\d/.test(value) &&
+    /[!@#$%^&*(),.?":{}|<>]/.test(value) &&
+    value.length >= 8
+  );
+};
+
+// Additional validation functions for each input
+const validateFirstName = (value) => isString(value);
+const validateLastName = (value) => isString(value);
+const validateUsername = (value) => isString(value);
+const validateEmail = (value) => isEmail(value);
+const validatePassword = (value) => isPassword(value);
+const validateVerifyPassword = (value, password) => value === password;
 
 const theme = createTheme();
 
@@ -21,11 +44,115 @@ export default function SignUp() {
   const navigateVerify = useNavigate();
   const [email, setEmail] = useUserEmail();
 
+  const [firstName, setFirstName] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [isFirstNameValid, setIsFirstNameValid] = useState(true);
 
+  const [lastName, setLastName] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [isLastNameValid, setIsLastNameValid] = useState(true);
 
+  const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [isUsernameValid, setIsUsernameValid] = useState(true);
+
+  const [emailInput, setEmailInput] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  const [verifyPassword, setVerifyPassword] = useState("");
+  const [verifyPasswordError, setVerifyPasswordError] = useState("");
+  const [isVerifyPasswordValid, setIsVerifyPasswordValid] = useState(true);
+
+  const [allowExtraEmails, setAllowExtraEmails] = useState(false);
+
+  const handleFirstNameChange = (event) => {
+    const value = event.target.value;
+    setFirstName(value);
+    setIsFirstNameValid(validateFirstName(value));
+    setFirstNameError(validateFirstName(value) ? "" : "First name must be text only");
+  };
+
+  const handleLastNameChange = (event) => {
+    const value = event.target.value;
+    setLastName(value);
+    setIsLastNameValid(validateLastName(value));
+    setLastNameError(validateLastName(value) ? "" : "Last name must be text only");
+  };
+
+  const handleUsernameChange = (event) => {
+    const value = event.target.value;
+    setUsername(value);
+    setIsUsernameValid(validateUsername(value));
+    setUsernameError(validateUsername(value) ? "" : "Username must be text only");
+  };
+
+  const handleEmailChange = (event) => {
+    const value = event.target.value;
+    setEmailInput(value);
+    setIsEmailValid(validateEmail(value));
+    setEmailError(validateEmail(value) ? "" : "Invalid email address format");
+  };
+
+  const handlePasswordChange = (event) => {
+    const value = event.target.value;
+    setPassword(value);
+    setIsPasswordValid(validatePassword(value));
+    setPasswordError(validatePassword(value) ? "" : "Invalid password format");
+  };
+
+  const handleVerifyPasswordChange = (event) => {
+    const value = event.target.value;
+    setVerifyPassword(value);
+    setIsVerifyPasswordValid(validateVerifyPassword(value, password));
+    setVerifyPasswordError(
+      validateVerifyPassword(value, password) ? "" : "Passwords do not match"
+    );
+  };
+
+  const handleAllowExtraEmailsChange = (event) => {
+    setAllowExtraEmails(event.target.checked);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsFirstNameValid(validateFirstName(firstName));
+    setFirstNameError(
+      validateFirstName(firstName) ? "" : "First name required"
+    );
+    setIsLastNameValid(validateLastName(lastName));
+    setLastNameError(validateLastName(lastName) ? "" : "Last name required");
+    setIsUsernameValid(validateUsername(username));
+    setUsernameError(validateUsername(username) ? "" : "Username required");
+    setIsEmailValid(validateEmail(emailInput));
+    setEmailError(
+      validateEmail(emailInput) ? "" : "Invalid email address format"
+    );
+    setIsPasswordValid(validatePassword(password));
+    setPasswordError(
+      validatePassword(password) ? "" : "Invalid password format"
+    );
+    setIsVerifyPasswordValid(validateVerifyPassword(verifyPassword, password));
+    setVerifyPasswordError(
+      validateVerifyPassword(verifyPassword, password)
+        ? ""
+        : "Passwords do not match"
+    );
+    const isValid =
+      isFirstNameValid &&
+      isLastNameValid &&
+      isUsernameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isVerifyPasswordValid;
+
+    if (!isValid) {
+      return;
+    }
     const formData = new FormData(event.currentTarget);
 
     try {
@@ -55,16 +182,24 @@ export default function SignUp() {
           console.error("Email verification request failed");
         }
       } else {
+        console.log(response.status);
+        console.log(response.data);
+
         console.error("Signup request failed");
       }
     } catch (error) {
+      if (error.response.status === 500) {
+        setEmailError(error.response.data.message);
+        setIsEmailValid(false);
+      }
+
       console.error(error);
     }
   };
 
   return (
     <Box
-      sx={{ p: "50px", bgcolor: "#121231", minHeight: "100vh", color: "white" }}
+      sx={{ p: "1px", bgcolor: "#121231", minHeight: "100vh", color: "white" }}
     >
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -74,10 +209,10 @@ export default function SignUp() {
               borderRadius: "10px",
               paddingTop: "25px",
               p: "20px",
-              height: "672px",
+              height: "820px",
               width: "100%",
               bgcolor: "#21213E",
-              mt: 8,
+              marginTop: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -117,82 +252,172 @@ export default function SignUp() {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, width: "90%" }}
             >
-              <Grid container spacing={2}>
-                {["firstName", "lastName"].map((field) => (
-                  <Grid item xs={6} key={field}>
-                    <TextField
-                      autoComplete=""
-                      name={field}
-                      required
-                      fullWidth
-                      id={field}
-                      label={field === "firstName" ? "First Name" : "Last Name"}
-                      autoFocus={field === "firstName"}
-                      type="text"
-                      inputProps={{
-                        style: {
-                          color: "white",
+              <TextField
+                autoComplete=""
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+                type="text"
+                value={firstName}
+                onChange={handleFirstNameChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  mt: "1",
+                  ...(isFirstNameValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {firstNameError}
+              </Box>
+              <TextField
+                autoComplete=""
+                name="lastName"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                type="text"
+                value={lastName}
+                onChange={handleLastNameChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  ...(isLastNameValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {lastNameError}
+              </Box>
+              <TextField
+                autoComplete=""
+                name="username"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                type="text"
+                value={username}
+                onChange={handleUsernameChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  ...(isUsernameValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {usernameError}
+              </Box>
+              <TextField
+                autoComplete=""
+                name="email"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                type="text"
+                value={emailInput}
+                onChange={handleEmailChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  ...(isEmailValid ? textFieldStyles : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {emailError}
+              </Box>
+              <TextField
+                autoComplete=""
+                name="password"
+                required
+                fullWidth
+                id="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  ...(isPasswordValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {passwordError}
+              </Box>
+              <TextField
+                autoComplete=""
+                name="verifyPassword"
+                required
+                fullWidth
+                id="verifyPassword"
+                label="Verify Password"
+                type="password"
+                value={verifyPassword}
+                onChange={handleVerifyPasswordChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  mt: "1",
+                  ...(isVerifyPasswordValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {verifyPasswordError}
+              </Box>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      checked={allowExtraEmails}
+                      onChange={handleAllowExtraEmailsChange}
+                      sx={{
+                        color: "white",
+                        "&.Mui-checked": {
+                          color: "#F6C927",
                         },
                       }}
-                      sx={{
-                        ...textFieldStyles,
-                      }}
                     />
-                  </Grid>
-                ))}
-                {["username", "email", "password", "verifyPassword"].map(
-                  (field) => (
-                    <Grid item xs={12} key={field}>
-                      <TextField
-                        autoComplete=""
-                        name={field}
-                        required
-                        fullWidth
-                        id={field}
-                        label={
-                          field === "username"
-                            ? "Username"
-                            : field === "password"
-                            ? "Password"
-                            : field === "verifyPassword"
-                            ? "Verify Password"
-                            : "Email Address"
-                        }
-                        type={
-                          field === "password" || field === "verifyPassword"
-                            ? "password"
-                            : "text"
-                        }
-                        inputProps={{
-                          style: {
-                            color: "white",
-                          },
-                        }}
-                        sx={{
-                          ...textFieldStyles,
-                        }}
-                      />
-                    </Grid>
-                  )
-                )}
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="allowExtraEmails"
-                        sx={{
-                          color: "white",
-                          "&.Mui-checked": {
-                            color: "#F6C927",
-                          },
-                        }}
-                      />
-                    }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                  />
-                </Grid>
+                  }
+                  label="I agree to receive marketing emails and updates.
+
+                  "
+                />
               </Grid>
               <Button
                 type="submit"
@@ -210,17 +435,16 @@ export default function SignUp() {
                     Already have an account? Sign in
                   </NavLink>
                 </Grid>
-                
               </Grid>
             </Box>
           </Box>
           <Typography
             variant="body2"
             align="center"
-            sx={{ mt: 5, color: "#ffffff63" }}
+            sx={{ mt: 5, color: "#ffffff63", mb: "50px" }}
           >
             {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
+            <Link color="inherit" href="https://infra-jerusalem-2.vercel.app/">
               CodeClique
             </Link>{" "}
             {new Date().getFullYear()}
@@ -255,6 +479,36 @@ const textFieldStyles = {
     {
       borderColor: "#F6C927 !important",
       color: "#F6C927",
+    },
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: "0 0 0 1000px #21213E inset",
+    WebkitTextFillColor: "white !important",
+  },
+};
+
+const invalidTextFieldStyles = {
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "red",
+  },
+  "& .MuiInputLabel-root": {
+    color: "red",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "red",
+  },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "red",
+  },
+  "& .MuiOutlinedInput-input": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-input.Mui-focused": {
+    color: "white",
+  },
+  "&:hover, &:hover .MuiInputLabel-root, &:hover .MuiOutlinedInput-notchedOutline":
+    {
+      borderColor: "red !important",
+      color: "red",
     },
   "& input:-webkit-autofill": {
     WebkitBoxShadow: "0 0 0 1000px #21213E inset",

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { useState,useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import useUserDetails from "../atom/userAtom";
 import axios from "axios";
 import {
@@ -65,12 +65,11 @@ export default function PrimarySearchAppBar() {
 
   const [img, setImg] = useState("");
 
-  const navigation = useNavigate()
+  const navigation = useNavigate();
 
   const fetchUserDetails = async () => {
     try {
       const token = localStorage.getItem("token");
-
 
       const response = await axios.get(
         "https://infra-jerusalem-2-server.vercel.app/userDetails",
@@ -83,17 +82,14 @@ export default function PrimarySearchAppBar() {
 
       if (response.status === 200) {
         localStorage.setItem("userDetails", JSON.stringify(response.data));
-        setImg(response.data.img)
-        setUserDetails(response.data)
-      }
-      else{
-        
-        navigation('/sign-in')
-
+        setImg(response.data.img);
+        setUserDetails(response.data);
+      } else {
+        navigation("/sign-in");
       }
     } catch (error) {
       console.log(error);
-      navigation('/sign-in')
+      navigation("/sign-in");
     }
   };
 
@@ -141,7 +137,7 @@ export default function PrimarySearchAppBar() {
               <Box
                 sx={{ display: "flex", alignItems: "center", marginRight: 4 }}
               >
-                <BadgeAvatars img={img}/>
+                <BadgeAvatars img={img} />
                 <Box
                   sx={{
                     display: {
@@ -196,9 +192,13 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="show more"
-              aria-haspopup="true"
               color="inherit"
+              sx={{
+                bgcolor: "#121231",
+                m: "1vh",
+                width: "48px",
+                height: "48px",
+              }}
             >
               <AccountMenu />
             </IconButton>
