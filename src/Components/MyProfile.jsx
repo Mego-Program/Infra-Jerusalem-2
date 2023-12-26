@@ -223,7 +223,7 @@ const MyProfile = (props) => {
         cloudName: 'dne5dplkd',
         uploadPreset: 'nh9q390o',
       },
-      // Handle success event
+
       (error, result) => {
         if (!error && result && result.event === 'success') {
           const publicId = result.info.public_id;
