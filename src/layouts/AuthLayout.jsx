@@ -155,7 +155,7 @@ export default function AuthLayout() {
               width: "100%",
             }}
           >
-            <Box sx={{ margin: "30px", width: "40%", maxHeight: "50px" }}>
+            <Box sx={{ margin: "30px", width: "40%", maxHeight: "43px" }}>
               <NavLink to="sign-in" style={{ color: "#F6C927" }}>
                 <Button
                   sx={{
@@ -166,11 +166,11 @@ export default function AuthLayout() {
                     "&:hover": { bgcolor: "#21213E" },
                   }}
                 >
-                  <h2 style={{ color: "white" }}>Sign In</h2>
+                  <h3 style={{ color: "white" }}>Sign In</h3>
                 </Button>
               </NavLink>
             </Box>
-            <Box sx={{ margin: "30px", width: "40%", height: "50px" }}>
+            <Box sx={{ margin: "30px", width: "40%", height: "43px" }}>
               <NavLink to="sign-up" style={{ color: "#F6C927" }}>
                 <Button
                   sx={{
@@ -181,7 +181,7 @@ export default function AuthLayout() {
                     "&:hover": { bgcolor: "#21213E" },
                   }}
                 >
-                  <h2 style={{ color: "white" }}>Sign Up</h2>
+                  <h3 style={{ color: "white" }}>Sign Up</h3>
                 </Button>
               </NavLink>
             </Box>

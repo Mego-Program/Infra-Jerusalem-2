@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Grid from "@mui/system/Unstable_Grid/Grid";
-import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -13,43 +11,44 @@ import useUserEmail from "../../atom/emailAtom";
 
 const theme = createTheme();
 
-const isLength = (value) => value.length === 5;
-const validateCode = (value) => isLength(value);
+const isEmail = (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) &&
+  value.indexOf("@") < value.lastIndexOf(".");
+const validateEmail = (value) => isEmail(value);
 
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [emailAtom, setEmailAtom] = useUserEmail();
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [emailError, setEmailError] = useState("");
 
-export default function Verify() {
-  const navigateVerify = useNavigate();
-  const [code, setCode] = useState("");
-  const [email, setEmail] = useUserEmail();
-  const [isCodeValid, setIsCodeValid] = useState(true);
-  const [codeError, setCodeError] = useState("");
-
-  const handleCodeChange = (event) => {
+  const handleEmailChange = (event) => {
     const value = event.target.value;
-    setCode(value);
-    setIsCodeValid(validateCode(value));
-    setCodeError(validateCode(value) ? "" : "Code must have 5 digits");
+    setEmail(value);
+    setIsEmailValid(validateEmail(value));
+    setEmailError(validateEmail(value) ? "" : "Invalid email address format");
   };
-
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setEmailAtom(email)
 
     try {
       const response = await axios.post(
-        "https://infra-jerusalem-2-server.vercel.app/verifyemail",
-        { code: code, email: email }
+        "https://infra-jerusalem-2-server.vercel.app/sendemailcode",
+        {
+          email: email,
+        }
       );
 
       if (response.status === 200) {
-        navigateVerify("/sign-in");
+        navigate("/verify-email");
       }
     } catch (error) {
-      if(error.response.status === 401 || error.response.status === 500){
-        setIsCodeValid(false)
-        setCodeError(error.response.data)
-
+      if (error.response.status === 400) {
+        setIsEmailValid(false);
+        setEmailError(error.response.data);
       }
       console.error(error);
     }
@@ -66,7 +65,7 @@ export default function Verify() {
               borderRadius: "10px",
               paddingTop: "25px",
               p: "20px",
-              height: "400px",
+              height: "350px",
               width: "100%",
               bgcolor: "#21213E",
               mt: 8,
@@ -103,7 +102,7 @@ export default function Verify() {
               </svg>
             </Box>
             <Typography component="h1" variant="h5">
-              Verify Code
+              Forgot Password
             </Typography>
             <Box
               component="form"
@@ -112,29 +111,27 @@ export default function Verify() {
               sx={{ mt: 3, width:"80%"}}
             >
               <TextField
-                autoComplete=""
-                name="code"
+                autoComplete="email"
+                name="email"
                 required
                 fullWidth
-                id="code"
-                label="Enter code from Email"
-                type="text"
-                value={code}
-                onChange={handleCodeChange}
+                id="email"
+                label="Enter your Email"
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
                 inputProps={{
                   style: {
                     color: "white",
                   },
                 }}
                 sx={{
-                  mt:"1",
-                  ...(isCodeValid
-                    ? textFieldStyles
-                    : invalidTextFieldStyles),
+                  mt: "1",
+                  ...(isEmailValid ? textFieldStyles : invalidTextFieldStyles),
                 }}
               />
               <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
-                {codeError}
+                {emailError}
               </Box>
               <Button
                 type="submit"
@@ -155,22 +152,16 @@ export default function Verify() {
                   },
                 }}
               >
-                Send
+                Send Email
               </Button>
-              <Grid container>
-                <Grid item="true" sx={{pt:"10px"}}>
-                  <NavLink to="/sign-up" style={{ color: "#F6C927",}}>
-                    {"Sign Up"}
-                  </NavLink>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Container>
       </ThemeProvider>
     </Box>
   );
-}
+};
+
 const invalidTextFieldStyles = {
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "red",
@@ -229,3 +220,5 @@ const textFieldStyles = {
     WebkitTextFillColor: "white !important",
   },
 };
+
+export default ForgotPassword;
