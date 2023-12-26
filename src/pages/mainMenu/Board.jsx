@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 
-export default function Board() {
+export default function Specs() {
   return (
     <Box
       sx={{
@@ -11,7 +11,7 @@ export default function Board() {
         fontSize: "20px",
       }}
     >
-      Board
+      Specs
     </Box>
   );
 }

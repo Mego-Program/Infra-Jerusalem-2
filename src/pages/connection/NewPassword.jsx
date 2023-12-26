@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Grid from "@mui/system/Unstable_Grid/Grid";
-import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -9,47 +7,86 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import useUserEmail from "../../atom/emailAtom";
 
 const theme = createTheme();
 
-const isLength = (value) => value.length === 5;
-const validateCode = (value) => isLength(value);
+const isPassword = (value) => {
+  return (
+    /[a-z]/.test(value) &&
+    /[A-Z]/.test(value) &&
+    /\d/.test(value) &&
+    /[!@#$%^&*(),.?":{}|<>]/.test(value) &&
+    value.length >= 8
+  );
+};
 
+const validatePassword = (value) => isPassword(value);
+const validateVerifyPassword = (value, password) => value === password;
 
-export default function Verify() {
-  const navigateVerify = useNavigate();
-  const [code, setCode] = useState("");
-  const [email, setEmail] = useUserEmail();
-  const [isCodeValid, setIsCodeValid] = useState(true);
-  const [codeError, setCodeError] = useState("");
+const NewPassword = () => {
+  const navigate = useNavigate();
 
-  const handleCodeChange = (event) => {
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  const [verifyPassword, setVerifyPassword] = useState("");
+  const [verifyPasswordError, setVerifyPasswordError] = useState("");
+  const [isVerifyPasswordValid, setIsVerifyPasswordValid] = useState(true);
+
+  const handlePasswordChange = (event) => {
     const value = event.target.value;
-    setCode(value);
-    setIsCodeValid(validateCode(value));
-    setCodeError(validateCode(value) ? "" : "Code must have 5 digits");
+    setPassword(value);
+    setIsPasswordValid(validatePassword(value));
+    setPasswordError(validatePassword(value) ? "" : "Invalid password format");
   };
 
-
+  const handleVerifyPasswordChange = (event) => {
+    const value = event.target.value;
+    setVerifyPassword(value);
+    setIsVerifyPasswordValid(validateVerifyPassword(value, password));
+    setVerifyPasswordError(
+      validateVerifyPassword(value, password) ? "" : "Passwords do not match"
+    );
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setPasswordError(
+      validatePassword(password) ? "" : "Invalid password format"
+    );
+    setIsVerifyPasswordValid(validateVerifyPassword(verifyPassword, password));
+    setVerifyPasswordError(
+      validateVerifyPassword(verifyPassword, password)
+        ? ""
+        : "Passwords do not match"
+    );
+    const isValid = isPasswordValid && isVerifyPasswordValid;
+
+    if (!isValid) {
+      return;
+    }
 
     try {
+      const token = localStorage.getItem("token");
+
       const response = await axios.post(
-        "https://infra-jerusalem-2-server.vercel.app/verifyemail",
-        { code: code, email: email }
+        "https://infra-jerusalem-2-server.vercel.app/updatepassword",
+        { password: password },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
 
       if (response.status === 200) {
-        navigateVerify("/sign-in");
+        navigate("/sign-in");
       }
     } catch (error) {
-      if(error.response.status === 401 || error.response.status === 500){
-        setIsCodeValid(false)
-        setCodeError(error.response.data)
-
+      if (error.response.status === 400) {
+        setIsPasswordValid(false);
+        setPasswordError(error.response.data);
       }
       console.error(error);
     }
@@ -66,7 +103,7 @@ export default function Verify() {
               borderRadius: "10px",
               paddingTop: "25px",
               p: "20px",
-              height: "400px",
+              height: "450px",
               width: "100%",
               bgcolor: "#21213E",
               mt: 8,
@@ -103,38 +140,63 @@ export default function Verify() {
               </svg>
             </Box>
             <Typography component="h1" variant="h5">
-              Verify Code
+              Set New Password
             </Typography>
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3, width:"80%"}}
+              sx={{ mt: 3, width: "80%" }}
             >
               <TextField
-                autoComplete=""
-                name="code"
+                autoComplete="new-password"
+                name="password"
                 required
                 fullWidth
-                id="code"
-                label="Enter code from Email"
-                type="text"
-                value={code}
-                onChange={handleCodeChange}
+                id="password"
+                label="Enter New Password"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
                 inputProps={{
                   style: {
                     color: "white",
                   },
                 }}
                 sx={{
-                  mt:"1",
-                  ...(isCodeValid
+                  mt: "1",
+                  ...(isPasswordValid
                     ? textFieldStyles
                     : invalidTextFieldStyles),
                 }}
               />
               <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
-                {codeError}
+                {passwordError}
+              </Box>
+              <TextField
+                autoComplete="new-password"
+                name="verifyPassword"
+                required
+                fullWidth
+                id="verifyPassword"
+                label="verify New Password"
+                type="password"
+                value={verifyPassword}
+                onChange={handleVerifyPasswordChange}
+                inputProps={{
+                  style: {
+                    color: "white",
+                  },
+                }}
+                sx={{
+                  mt: "1",
+                  ...(isVerifyPasswordValid
+                    ? textFieldStyles
+                    : invalidTextFieldStyles),
+                }}
+              />
+              <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
+                {verifyPasswordError}
               </Box>
               <Button
                 type="submit"
@@ -155,22 +217,16 @@ export default function Verify() {
                   },
                 }}
               >
-                Send
+                Update Password
               </Button>
-              <Grid container>
-                <Grid item="true" sx={{pt:"10px"}}>
-                  <NavLink to="/sign-up" style={{ color: "#F6C927",}}>
-                    {"Sign Up"}
-                  </NavLink>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Container>
       </ThemeProvider>
     </Box>
   );
-}
+};
+
 const invalidTextFieldStyles = {
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "red",
@@ -229,3 +285,5 @@ const textFieldStyles = {
     WebkitTextFillColor: "white !important",
   },
 };
+
+export default NewPassword;

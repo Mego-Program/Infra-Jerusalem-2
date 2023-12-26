@@ -15,6 +15,7 @@ import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
 import MyProfile from './MyProfile';
 import useUserDetails from "../atom/userAtom";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 export default function AccountMenu() {
@@ -74,7 +75,10 @@ export default function AccountMenu() {
 
       {/* Mobile view: Badge Avatars */}
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
-        <Tooltip title="Account settings">
+      <Tooltip
+          title="Account settings"
+          sx={{ bgcolor: open ? "#F6C927" : "#121231" }}
+        >
           <IconButton
             onClick={handleClick}
             size="large"
@@ -82,8 +86,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* Assume you have a BadgeAvatars component here */}
-            {/* <BadgeAvatars /> */}
+            <MoreVertIcon sx={{ color: "white" }} />
           </IconButton>
         </Tooltip>
       </Box>

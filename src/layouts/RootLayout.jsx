@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect,useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
@@ -16,7 +16,13 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink, Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
+import {
+  NavLink,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { linksBottom, linksTop } from "../Components/Arr_Icons.jsx";
 import PrimarySearchAppBar from "../Components/PrimarySearchAppBar.jsx";
 import axios from "axios";
@@ -31,9 +37,6 @@ function RootLayout({ window }) {
 
   const location = useLocation();
 
-
-
-
   // Function to set the active button and title
   const activeButton = () => {
     // Extract the active button from the pathname
@@ -43,7 +46,7 @@ function RootLayout({ window }) {
     setTitle(
       activeButton
         .split("-")
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
     );
   };
@@ -55,23 +58,19 @@ function RootLayout({ window }) {
   const renderLinks = (links, marginLeft = "0vh") => (
     <List sx={{ flex: 1, marginLeft }}>
       {links.map(({ to, text, icon }, index) => (
-        <NavLink key={index} to={to} style={{ textDecoration: "none"}}>
+        <NavLink key={index} to={to} style={{ textDecoration: "none" }}>
           <ListItem>
             <ListItemButton
               onClick={() => activeButton()}
               sx={{
-                backgroundColor:
-                  title === text ? "#F6C927" : "#121231",
+                backgroundColor: title === text ? "#F6C927" : "#121231",
                 color: "white",
                 borderRadius: "7px",
                 border: "solid 1px #121231",
                 "&:hover": {
-                  backgroundColor:
-                    title === text ? "#F6C927" : "#21213E",
+                  backgroundColor: title === text ? "#F6C927" : "#21213E",
                   border:
-                    title === text
-                      ? "solid 1px #121231"
-                      : "solid 1px #F6C927",
+                    title === text ? "solid 1px #121231" : "solid 1px #F6C927",
                 },
               }}
             >
@@ -87,7 +86,7 @@ function RootLayout({ window }) {
   // Sidebar content
   const drawer = (
     <Box
-      height="100%"
+      height="100vh"
       display="flex"
       flexDirection="column"
       bgcolor="#121231"
@@ -107,9 +106,15 @@ function RootLayout({ window }) {
     activeButton();
   }, [location.pathname]);
 
-  // JSX for the root layout
   return (
-    <Box sx={{ display: "flex", bgcolor: "#21213E", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        bgcolor: "#21213E",
+        minHeight: "100vh",
+        maxHeight: "100vh",
+      }}
+    >
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -120,32 +125,38 @@ function RootLayout({ window }) {
           padding: "5px 0px",
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: "70px" }}>
-  <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      edge="start"
-      onClick={handleDrawerToggle}
-      sx={{ mr: 2, display: { sm: "none" } }}
-    >
-      <MenuIcon />
-    </IconButton>
-    <Typography
-      variant="h6"
-      noWrap
-      component="div"
-      color="#F6C927"
-      sx={{
-        display: { xs: "none", sm: "block" },
-      }}
-    >
-      {title}
-    </Typography>
-  </Box>
-  <PrimarySearchAppBar sx={{ flex: "0 1 auto" }} />
-</Toolbar>
-
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: "70px",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              color="#F6C927"
+              sx={{
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              {title}
+            </Typography>
+          </Box>
+          <PrimarySearchAppBar sx={{ flex: "0 1 auto" }} />
+        </Toolbar>
       </AppBar>
 
       <Box
@@ -187,7 +198,7 @@ function RootLayout({ window }) {
       </Box>
 
       {/* Main content area */}
-      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width: "100%" }}>
+      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width: "100%",height:"100%"}}>
         <Outlet />
       </Box>
     </Box>
