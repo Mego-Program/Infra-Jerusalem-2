@@ -111,7 +111,7 @@ function RootLayout({ window }) {
       sx={{
         display: "flex",
         bgcolor: "#21213E",
-        minHeight: "100vh",
+        minHeight: "99.8vh",
         maxHeight: "100vh",
       }}
     >
@@ -198,7 +198,7 @@ function RootLayout({ window }) {
       </Box>
 
       {/* Main content area */}
-      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width: "100%",height:"100%"}}>
+      <Box sx={{ p: "75px 5px 5px 5px", bgcolor: "#21213E", width: "100%",height:"100vh"}}>
         <Outlet />
       </Box>
     </Box>

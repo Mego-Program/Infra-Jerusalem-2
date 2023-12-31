@@ -98,9 +98,9 @@ export default function PrimarySearchAppBar() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1, maxHeight: "70px" }}>
-      <AppBar position="static" elevation={0} sx={{ maxHeight: "70px" }}>
-        <Toolbar sx={{ maxHeight: "70px" }}>
+    <Box sx={{ flexGrow: 1, maxHeight: "12vh" }}>
+      <AppBar position="static" elevation={0} sx={{ maxHeight: "12vh" }}>
+        <Toolbar sx={{ maxHeight: "12vh" }}>
           {/* Flex grow for spacing on the left */}
           <Box sx={{ flexGrow: 1 }} />
 
