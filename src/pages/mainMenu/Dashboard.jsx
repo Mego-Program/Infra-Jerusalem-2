@@ -4,12 +4,10 @@ import { Box, Paper, Typography } from "@mui/material";
 import ChartContainer from "../../Components/ChartContainer";
 import axios from "axios";
 
-
 const Dashboard = () => {
-  const [projects, setProjects] = useState({});
-  const [userName, setUserName] = useState("");
+  const [tasks, setTasks] = useState({});
+  const [sprints, setSprints] = useState({});
   const [loading, setLoading] = useState(true);
-
 
   const fetchUserDetails = async () => {
     try {
@@ -25,13 +23,12 @@ const Dashboard = () => {
       );
 
       if (response.status === 200) {
-        return response.data.userName
+        return response.data.userName;
       }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const fetchUserProjects = async () => {
     try {
@@ -40,8 +37,8 @@ const Dashboard = () => {
       const encodedName = btoa(encodeURIComponent(name));
       console.log(encodedName);
 
-      console.log("d:",decodeURIComponent(atob(encodedName)));
-  
+      console.log("d:", decodeURIComponent(atob(encodedName)));
+
       const response = await axios.get(
         "https://project-jerusalem-2-server.vercel.app/desh/tasks",
         {
@@ -50,11 +47,12 @@ const Dashboard = () => {
           },
         }
       );
-  
+
       console.log(response.data);
-  
+
       if (response.status === 200) {
-        setProjects(response.data);
+        setTasks(response.data.tasks);
+        setSprints(response.data.sprints);
       }
     } catch (error) {
       console.log(error);
@@ -62,13 +60,8 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-      // await fetchUserDetails();
-      fetchUserProjects();
-      setLoading(false);
-    // };
-  
-    // fetchData();
+    fetchUserProjects();
+    setLoading(false);
   }, []);
 
   const doughnutChartData = {
@@ -80,7 +73,7 @@ const Dashboard = () => {
     ],
     datasets: [
       {
-        data: [projects.n, projects.i, projects.c, projects.f],
+        data: [tasks.n, tasks.i, tasks.c, tasks.f],
         backgroundColor: ["#36B176", "#3685B1", "#EE786C", "#F6C927"],
         hoverBackgroundColor: [
           "#36b17691",
@@ -88,15 +81,24 @@ const Dashboard = () => {
           "#ee796c88",
           "#f6c9278b",
         ],
-        fontColor: "red", 
-        // Set the font color to red
-
+        fontColor: "red",
       },
     ],
   };
 
+  const filteredEntries = Object.entries(sprints).filter(
+    ([key, value]) => value > 0
+  );
+
+  // Convert filtered entries back into an object
+  const filteredSprints = Object.fromEntries(filteredEntries);
+
+
+  const keysArray = Object.keys(filteredSprints);
+  const valuesArray = Object.values(filteredSprints);
+
   const barChartData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: keysArray,
     datasets: [
       {
         label: "Dataset 1",
@@ -105,7 +107,7 @@ const Dashboard = () => {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255, 99, 132, 0.4)",
         hoverBorderColor: "rgba(255, 99, 132, 1)",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: valuesArray,
       },
     ],
   };
