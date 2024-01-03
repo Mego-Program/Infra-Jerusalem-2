@@ -55,6 +55,7 @@ export default function AccountMenu() {
           display: { xs: "none", md: "flex" },
           alignItems: "center",
           textAlign: "center",
+          
         }}
       >
         <Tooltip
@@ -101,7 +102,7 @@ export default function AccountMenu() {
           elevation: 0,
           sx: {
             overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            filter: "drop-shadow(0px 2px 8px rgba(255,255,255,0.32))",
             backgroundColor: "#121231",
             border: "solid #21213E 5px",
             color: "white",
@@ -148,25 +149,6 @@ export default function AccountMenu() {
           }}
         >
           <Avatar /> Profile
-        </MenuItem>
-       
-        <Divider />
-        <MenuItem
-          onClick={handleClose}
-          sx={{
-            "&:hover": {
-              backgroundColor: "#21213E",
-              color: "#F6C927",
-              "& .MuiSvgIcon-root": {
-                color: "#F6C927",
-              },
-            },
-          }}
-        >
-          <ListItemIcon>
-            <PersonAdd fontSize="small" sx={{ color: "white" }} />
-          </ListItemIcon>
-          Add another account
         </MenuItem>
         <MenuItem
           onClick={handleClose}
