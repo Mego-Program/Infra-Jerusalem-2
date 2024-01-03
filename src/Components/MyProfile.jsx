@@ -1,131 +1,14 @@
-// import * as React from "react";
-// import PropTypes from "prop-types";
-// import DialogTitle from "@mui/material/DialogTitle";
-// import Dialog from "@mui/material/Dialog";
-// import UploadWidget from "./UploadWidget";
-// import { Button } from "@mui/material";
-// import EditPassword from "./EditPassword";
-// import { useState, useEffect } from "react";
-// import BadgeAvatars from "./BadgeAvatars";
-
-// const MyProfile = (props) => {
-//   const { onClose, selectedValue, open } = props;
-//   const [userDetails, setUserDetails] = useState({});
-
-//   useEffect(() => {
-//     const user = localStorage.getItem("userDetails");
-//     const userParse = JSON.parse(user);
-//     setUserDetails(userParse);
-//   }, []);
-
-//   const handleClose = () => {
-//     onClose(selectedValue);
-//   };
-
-//   const handleListItemClick = (value) => {
-//     onClose(value);
-//   };
-
-//   return (
-//     <Dialog onClose={handleClose} open={open} sx={{}}>
-//       <div
-//         style={{
-// width: "80vh",
-// height: "70vh",
-// backgroundColor: "#21213E",
-// border: "2px solid #F6C927",
-// color: "white",
-//         }}
-//       >
-// <div
-//   style={{
-// display: "flex",
-// flexDirection: "column",
-// textAlign: "center",
-// alignItems: "center",
-// padding: "5%",
-// width: "100%",
-// height: "100%",
-//   }}
-// >
-// <h1
-//   style={{
-//     width: "100%",
-//     color: "#F6C927",
-//     borderBottom: "2px solid #F6C927",
-//     marginBottom: "7%",
-//   }}
-// >
-//   My Profile
-// </h1>
-// <img
-//   src={userDetails.img}
-//   alt=""
-//   style={{ width: "18%", borderRadius: "50%", marginBottom: "3%" }}
-// />
-//           <div
-//             style={{
-// display: "flex",
-// flexDirection: "row",
-// width: "100%",
-// justifyContent: "space-around",
-// marginBottom: "3%"
-//             }}
-//           >
-// <div>
-//   <h5 style={{ color: "#F6C927" }}>User name </h5>
-//   <h4>{userDetails.userName}</h4>
-// </div>
-// <div>
-//   <h5 style={{ color: "#F6C927" }}>Email </h5>
-//   <h4>{userDetails.email}</h4>
-// </div>
-//           </div>
-//           <div
-//             style={{
-//               display: "flex",
-//               flexDirection: "row",
-//               width: "100%",
-//               justifyContent: "space-around",
-//               marginBottom: "3%"
-//             }}
-//           >
-//             <div>
-//               <h5 style={{ color: "#F6C927" }}>First name </h5>
-//               <import style={{}} ></import>
-//             </div>
-//             <div>
-//               <h5 style={{ color: "#F6C927" }}>Last name </h5>
-//               <h4>{userDetails.email}</h4>
-//             </div>
-//           </div>
-//         </div>
-//         {/* <UploadWidget /> */}
-//         {/* <EditPassword /> */}
-//       </div>
-//     </Dialog>
-//   );
-// };
-
-// MyProfile.propTypes = {
-//   onClose: PropTypes.func.isRequired,
-//   open: PropTypes.bool.isRequired,
-//   selectedValue: PropTypes.string.isRequired,
-// };
-
-// export default MyProfile;
-
-// ============================================================================================
-
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { color } from "@mui/system";
+import { Typography } from "@mui/material";
 
-
+//  validation
 const validationSchema = Yup.object({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
@@ -144,114 +27,140 @@ const validationSchema = Yup.object({
 
 const MyProfile = (props) => {
   const { onClose, selectedValue, open } = props;
+
   const [userDetails, setUserDetails] = useState({});
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [newPassword, setnewPassword] = useState("");
+  const [img, setImg] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    const user = localStorage.getItem("userDetails");
-    const userParse = JSON.parse(user);
-    setUserDetails(userParse);
-  }, []);
-
-  const handleClose = () => {
-    onClose(selectedValue);
+  //=====================================================
+  const [isButtonOn, setIsButtonOn] = useState(false);
+  const toggleButton = () => {
+    setIsButtonOn(!isButtonOn);
   };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
-  const initialValues = {
-    firstName: `${userDetails.firstName}`,
-    lastName: `${userDetails.lastName}`,
-    newPassword: "",
-    verifyPassword: "",
-  };
-
-  const changeImage = () => {
-    // Assuming you have a new image URL or logic to fetch a new image URL
-    const newImageUrl = "new_image_url.jpg";
-
-    // Update the userDetails state with the new image
-    setUserDetails({ ...userDetails, img: newImageUrl });
-  };
-
-  const onSubmit = async (values) => {
-    console.log("form data:", values);
-
+  //======================================================
+  const fetchUserDetails = async () => {
     try {
-      const response = await axios.post(
-        "https://infra-jerusalem-2-server.vercel.app/signup",
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(
+        "https://infra-jerusalem-2-server.vercel.app/userDetails",
         {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          userName: userDetails.userName,
-          password: values.password,
-          email: userDetails.email,
-          img: userDetails.img,
+          headers: {
+            Authorization: token,
+          },
         }
       );
 
       if (response.status === 200) {
-        const emailVerificationResponse = await axios.post(
-          "https://infra-jerusalem-2-server.vercel.app/sendemail",
-          {
-            email: formData.get("email"),
-          }
-        );
+        console.log("response: ", response);
+        setUserDetails(response.data);
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setImg(response.data.img);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        if (emailVerificationResponse.status === 200) {
-          setEmail(formData.get("email"));
-          navigateVerify("/verify");
-        } else {
-          console.error("Email verification request failed");
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const handleClose = () => {
+    onClose(selectedValue);
+    toggleButton();
+  };
+
+  const initialValues = {
+    firstName: firstName,
+    lastName: lastName,
+    newPassword: "",
+    verifyPassword: "",
+  };
+
+  const onSubmit = async (values) => {
+    console.log("form data:", values);
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    setFirstName(values.firstName);
+    setLastName(values.lastName);
+    setnewPassword(values.newPassword);
+
+    try {
+      const response = await axios.post(
+        "https://infra-jerusalem-2-server.vercel.app/editProfile",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          userName: userDetails.userName,
+          password: newPassword,
+          email: userDetails.email,
+          img: img,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
         }
-      } else {
-        console.error("Signup request failed");
+        
+      );
+
+      if (response.status === 200) {
+        console.log(response);
+        handleClose();
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-//-----------------------
+  //-----------------------
 
   const widgetRef = useRef();
 
   useEffect(() => {
     widgetRef.current = window.cloudinary.createUploadWidget(
       {
-        cloudName: 'dne5dplkd',
-        uploadPreset: 'nh9q390o',
+        cloudName: "dne5dplkd",
+        uploadPreset: "nh9q390o",
       },
 
       (error, result) => {
-        if (!error && result && result.event === 'success') {
+        if (!error && result && result.event === "success") {
           const publicId = result.info.public_id;
           const imageUrl = result.info.secure_url;
-          uploadImg(imageUrl);
+          setImg(imageUrl);
 
-          console.log('Uploaded successfully. Public ID:', publicId);
-          console.log('Image URL:', imageUrl);
+          console.log("Uploaded successfully. Public ID:", publicId);
+          console.log("Image URL:", imageUrl);
         }
       }
     );
   }, []);
+
   return (
     <Dialog onClose={handleClose} open={open} sx={{}}>
       <div
         style={{
-          width: "70vh",
-          height: "90vh",
+          width: "400px",
+          height: "100%",
           backgroundColor: "#21213E",
           border: "2px solid #F6C927",
           color: "white",
+          margin: "0",
+          padding: "0",
         }}
       >
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "400px", height: "100%" }}
         >
           <Form
             style={{
@@ -259,8 +168,8 @@ const MyProfile = (props) => {
               flexDirection: "column",
               textAlign: "center",
               alignItems: "center",
-              padding: "5%",
-              width: "100%",
+              padding: "0px 20px",
+              width: "398px",
               height: "100%",
             }}
           >
@@ -268,8 +177,8 @@ const MyProfile = (props) => {
               style={{
                 width: "100%",
                 color: "#F6C927",
-                borderBottom: "2px solid #F6C927",
-                marginBottom: "7%",
+                borderBottom: "1px solid #F6C927",
+                marginBottom: "15px",
               }}
             >
               Your Profile
@@ -279,35 +188,34 @@ const MyProfile = (props) => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                width: "100%",
-                justifyContent: "space-around",
-                marginBottom: "2%",
+                width: "325px",
+                height: "110px",
+                justifyContent: "space-between",
               }}
             >
               <div
                 style={{
-                  width: "22%",
-                  marginBottom: "3%",
+                  width: "100px",
+                  height: "100px",
                   position: "relative",
-                  display: "inline-block",
                 }}
               >
                 <img
-                  src={userDetails.img}
+                  src={img}
                   alt=""
                   style={{
                     width: "100px",
-                    height:"100px",
+                    height: "100px",
                     borderRadius: "50%",
                   }}
                 />
-                                <button
+                <button
                   style={{
                     position: "absolute",
-                    bottom: "10%",
-                    right: "0%",
-                    height: "0%",
-                    width: "18%",
+                    width: "20px",
+                    height: "20px",
+                    bottom: "8px",
+                    right: "-5px",
                     backgroundColor: "transparent",
                     border: "0",
                   }}
@@ -315,19 +223,19 @@ const MyProfile = (props) => {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    height="16"
-                    width="18"
                     viewBox="0 0 576 512"
                     style={{
                       position: "absolute",
-                      bottom: "-5%",
-                      right: "-30%",
+                      bottom: "-0.5px",
+                      right: "-3.5px",
+                      width: "22px",
+                      height: "22px",
+                      fill: isHovered ? "rgb(249, 227, 149)" : "#f6c927",
                     }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
-                    <path
-                      fill="#f6c927"
-                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                    />
+                    <path d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" />
                   </svg>
                 </button>
               </div>
@@ -336,16 +244,33 @@ const MyProfile = (props) => {
                   display: "flex",
                   flexDirection: "column",
                   textAlign: "start",
-                  justifyContent: "space-around",
+                  justifyContent: "space-between",
+                  height: "108px",
                 }}
               >
-                <div>
-                  <h5 style={{ color: "#F6C927" }}>User name </h5>
-                  <h4>{userDetails.userName}</h4>
+                <div style={{ paddingTop: "2px" }}>
+                  <Typography
+                    style={{
+                      color: "#F6C927",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    User name
+                  </Typography>
+                  <Typography>{userDetails.userName}</Typography>
                 </div>
-                <div>
-                  <h5 style={{ color: "#F6C927" }}>Email </h5>
-                  <h4>{userDetails.email}</h4>
+                <div style={{ paddingBottom: "4px" }}>
+                  <Typography
+                    style={{
+                      color: "#F6C927",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Email
+                  </Typography>
+                  <Typography>{userDetails.email}</Typography>
                 </div>
               </div>
             </div>
@@ -355,12 +280,18 @@ const MyProfile = (props) => {
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "start",
-                marginBottom: "2%",
-                width: "90%",
-                height: "80px",
+                width: "325px",
+                height: "75px",
               }}
             >
-              <label htmlFor="firstName" style={{ color: "#F6C927" }}>
+              <label
+                htmlFor="firstName"
+                style={{
+                  color: "#F6C927",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                }}
+              >
                 First name
               </label>
               <Field
@@ -368,13 +299,13 @@ const MyProfile = (props) => {
                 id="firstName"
                 name="firstName"
                 style={{
-                  height: "35%",
+                  height: "30px",
                   width: "100%",
                   backgroundColor: "#21213E",
                   color: "white",
                   borderRadius: "5px",
                   border: "1px solid #F6C927",
-                  fontSize: "100%",
+                  fontSize: "90%",
                 }}
               />
               <div style={{ color: "red", fontSize: "85%" }}>
@@ -388,12 +319,18 @@ const MyProfile = (props) => {
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "start",
-                marginBottom: "2%",
-                width: "90%",
-                height: "80px",
+                width: "325px",
+                height: "75px",
               }}
             >
-              <label htmlFor="lastName" style={{ color: "#F6C927" }}>
+              <label
+                htmlFor="lastName"
+                style={{
+                  color: "#F6C927",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                }}
+              >
                 Last name
               </label>
               <Field
@@ -401,13 +338,13 @@ const MyProfile = (props) => {
                 id="lastName"
                 name="lastName"
                 style={{
-                  height: "35%",
+                  height: "30px",
                   width: "100%",
                   backgroundColor: "#21213E",
                   color: "white",
                   borderRadius: "5px",
                   border: "1px solid #F6C927",
-                  fontSize: "100%",
+                  fontSize: "90%",
                 }}
               />
               <div style={{ color: "red", fontSize: "85%" }}>
@@ -415,83 +352,147 @@ const MyProfile = (props) => {
               </div>
             </div>
 
-            <div
-              className="form-control"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "start",
-                marginBottom: "2%",
-                width: "90%",
-                height: "80px",
-              }}
-            >
-              <label htmlFor="newPassword" style={{ color: "#F6C927" }}>
-                New password
-              </label>
-              <Field
-                type="password"
-                id="newPassword"
-                name="newPassword"
+            <div style={{ width: "325px" }}>
+              <div
                 style={{
-                  height: "35%",
-                  width: "100%",
-                  backgroundColor: "#21213E",
-                  color: "white",
-                  borderRadius: "5px",
-                  border: "1px solid #F6C927",
-                  fontSize: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
-              />
-              <div style={{ color: "red", fontSize: "85%" }}>
-                <ErrorMessage name="newPassword" className="error-message" />
+              >
+                <input
+                  type="checkbox"
+                  checked={isButtonOn}
+                  onChange={toggleButton}
+                  style={{ width: "17px", height: "17px", marginTop: "0" }}
+                />
+                <Typography>change Password</Typography>
               </div>
-            </div>
 
+              {isButtonOn ? (
+                <>
+                  <div
+                    className="form-control"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      textAlign: "start",
+                      width: "325px",
+                      height: "75px",
+                    }}
+                  >
+                    <label
+                      htmlFor="newPassword"
+                      style={{
+                        color: "#F6C927",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      New password
+                    </label>
+                    <Field
+                      type="password"
+                      id="newPassword"
+                      name="newPassword"
+                      style={{
+                        height: "30px",
+                        width: "100%",
+                        backgroundColor: "#21213E",
+                        color: "white",
+                        borderRadius: "5px",
+                        border: "1px solid #F6C927",
+                        fontSize: "90%",
+                      }}
+                    />
+                    <div style={{ color: "red", fontSize: "85%" }}>
+                      <ErrorMessage
+                        name="newPassword"
+                        className="error-message"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="form-control"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      textAlign: "start",
+                      width: "325px",
+                      height: "75px",
+                    }}
+                  >
+                    <label
+                      htmlFor="verifyPassword"
+                      style={{
+                        color: "#F6C927",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Verify password
+                    </label>
+                    <Field
+                      type="password"
+                      id="verifyPassword"
+                      name="verifyPassword"
+                      style={{
+                        height: "30px",
+                        width: "100%",
+                        backgroundColor: "#21213E",
+                        color: "white",
+                        borderRadius: "5px",
+                        border: "1px solid #F6C927",
+                        fontSize: "90%",
+                      }}
+                    />
+                    <div style={{ color: "red", fontSize: "85%" }}>
+                      <ErrorMessage
+                        name="verifyPassword"
+                        className="error-message"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
             <div
-              className="form-control"
               style={{
+                width: "325px",
+                marginTop: "12px",
+                marginBottom: "12px",
                 display: "flex",
-                flexDirection: "column",
-                textAlign: "start",
-                marginBottom: "2%",
-                width: "90%",
-                height: "80px",
+                flexDirection: "row",
+                justifyContent: "space-around",
               }}
             >
-              <label htmlFor="verifyPassword" style={{ color: "#F6C927" }}>
-                Verify password
-              </label>
-              <Field
-                type="password"
-                id="verifyPassword"
-                name="verifyPassword"
+              <button
+                type="button"
                 style={{
-                  height: "35%",
-                  width: "100%",
-                  backgroundColor: "#21213E",
-                  color: "white",
-                  borderRadius: "5px",
-                  border: "1px solid #F6C927",
-                  fontSize: "100%",
+                  backgroundColor: "#F6C927",
+                  borderRadius: "10px",
+                  height: "30px",
+                  width: "80px",
                 }}
-              />
-              <div style={{ color: "red", fontSize: "85%" }}>
-                <ErrorMessage name="verifyPassword" className="error-message" />
-              </div>
+                onClick={handleClose}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                style={{
+                  backgroundColor: "#F6C927",
+                  borderRadius: "10px",
+                  height: "30px",
+                  width: "80px",
+                }}
+              >
+                Save
+              </button>
             </div>
-
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "#F6C927",
-                borderRadius: "10px",
-                height: "5%",
-                width: "20%",
-              }}
-            >
-              Save
-            </button>
           </Form>
         </Formik>
       </div>
