@@ -13,10 +13,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
-import MyProfile from './MyProfile';
+import MyProfile from "./MyProfile";
 import useUserDetails from "../atom/userAtom";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Typography } from "@mui/material";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,10 +31,9 @@ export default function AccountMenu() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
-    navigeteSignIn('/sign-in')
-
+    navigeteSignIn("/sign-in");
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -55,7 +54,6 @@ export default function AccountMenu() {
           display: { xs: "none", md: "flex" },
           alignItems: "center",
           textAlign: "center",
-          
         }}
       >
         <Tooltip
@@ -76,7 +74,7 @@ export default function AccountMenu() {
 
       {/* Mobile view: Badge Avatars */}
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
-      <Tooltip
+        <Tooltip
           title="Account settings"
           sx={{ bgcolor: open ? "#F6C927" : "#121231" }}
         >
@@ -103,6 +101,7 @@ export default function AccountMenu() {
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(255,255,255,0.32))",
+            width: "180px",
             backgroundColor: "#121231",
             border: "solid #21213E 5px",
             color: "white",
@@ -148,7 +147,8 @@ export default function AccountMenu() {
             },
           }}
         >
-          <Avatar /> Profile
+          <Avatar /> 
+          <Typography sx={{ml: "14.5px"}}> Profile</Typography>
         </MenuItem>
         <MenuItem
           onClick={handleClose}
@@ -163,7 +163,7 @@ export default function AccountMenu() {
           }}
         >
           <ListItemIcon>
-            <Settings fontSize="small" sx={{ color: "white" }} />
+            <Settings fontSize="small" sx={{ mr: "30px", color: "white" }} />
           </ListItemIcon>
           Settings
         </MenuItem>
@@ -180,7 +180,7 @@ export default function AccountMenu() {
           }}
         >
           <ListItemIcon>
-            <Logout fontSize="small" sx={{ color: "white" }} />
+            <Logout fontSize="small" sx={{ mr: "30px", color: "white" }} />
           </ListItemIcon>
           Logout
         </MenuItem>
