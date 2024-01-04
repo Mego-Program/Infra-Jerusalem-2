@@ -31,7 +31,7 @@ export default function AccountMenu() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
-    navigeteSignIn('/sign-in')
+    navigeteSignIn('/')
 
   };
   
