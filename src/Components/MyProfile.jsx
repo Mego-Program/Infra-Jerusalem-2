@@ -56,7 +56,7 @@ const toggleButton = () => {
       );
 
       if (response.status === 200) {
-        console.log("response: ", response);
+        // console.log("response: ", response);
         setUserDetails(response.data);
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
@@ -86,7 +86,7 @@ const toggleButton = () => {
   };
 
   const onSubmit = async (values) => {
-    console.log("form data:", values);
+    // console.log("form data:", values);
     const token = localStorage.getItem("token");
     setFirstName(values.firstName);
     setLastName(values.lastName);
@@ -110,7 +110,7 @@ const toggleButton = () => {
         );
 
         if (response.status === 200) {
-          console.log(response);
+          // console.log(response);
           handleClose();
         }
       } catch (error) {
@@ -135,7 +135,7 @@ const toggleButton = () => {
         );
 
         if (response.status === 200) {
-          console.log(response);
+          // console.log(response);
           handleClose();
         }
       } catch (error) {
