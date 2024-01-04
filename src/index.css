@@ -4,15 +4,7 @@ html {
 
   
 }
-
-.customNavLink {
-  text-decoration: none !important;
-  width: 200px !important;
-  height: 200px !important;
-  color: green !important;
+body{
+  background-color: #21213E;
 }
 
-.customNavLink.active {
-  background-color: red !important;
-  color: white !important;
-}

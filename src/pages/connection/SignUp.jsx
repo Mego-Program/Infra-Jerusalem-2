@@ -13,8 +13,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { NavLink, useNavigate } from "react-router-dom";
 import useUserEmail from "../../atom/emailAtom";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import useLoading from "../../atom/loading";
 
-// Assuming the existence of these utility functions
+
 const isString = (value) =>
   value.length >= 1 && typeof value === "string" && isNaN(Number(value));
 const isEmail = (value) =>
@@ -30,7 +35,6 @@ const isPassword = (value) => {
   );
 };
 
-// Additional validation functions for each input
 const validateFirstName = (value) => isString(value);
 const validateLastName = (value) => isString(value);
 const validateUsername = (value) => isString(value);
@@ -43,6 +47,8 @@ const theme = createTheme();
 export default function SignUp() {
   const navigateVerify = useNavigate();
   const [email, setEmail] = useUserEmail();
+  const [loading, setLoading] = useLoading()
+
 
   const [firstName, setFirstName] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
@@ -69,6 +75,17 @@ export default function SignUp() {
   const [isVerifyPasswordValid, setIsVerifyPasswordValid] = useState(true);
 
   const [allowExtraEmails, setAllowExtraEmails] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const [showVerifyPassword, setShowVerifyPassword] = useState(false);
+  const handleClickShowVerifyPassword = () => setShowVerifyPassword((show) => !show);
+  const handleMouseDownVerifyPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleFirstNameChange = (event) => {
     const value = event.target.value;
@@ -156,6 +173,8 @@ export default function SignUp() {
     const formData = new FormData(event.currentTarget);
 
     try {
+      setLoading(true)
+
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/signup",
         {
@@ -177,6 +196,7 @@ export default function SignUp() {
 
         if (emailVerificationResponse.status === 200) {
           setEmail(formData.get("email"));
+          setLoading(false)
           navigateVerify("/verify");
         } else {
           console.error("Email verification request failed");
@@ -184,7 +204,6 @@ export default function SignUp() {
       } else {
         console.log(response.status);
         console.log(response.data);
-
         console.error("Signup request failed");
       }
     } catch (error) {
@@ -192,7 +211,7 @@ export default function SignUp() {
         setEmailError(error.response.data.message);
         setIsEmailValid(false);
       }
-
+      setLoading(false)
       console.error(error);
     }
   };
@@ -268,6 +287,8 @@ export default function SignUp() {
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{
@@ -293,6 +314,8 @@ export default function SignUp() {
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{
@@ -317,6 +340,8 @@ export default function SignUp() {
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{
@@ -341,6 +366,8 @@ export default function SignUp() {
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{
@@ -357,12 +384,33 @@ export default function SignUp() {
                 fullWidth
                 id="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        color="white"
+                      >
+                        {showPassword ? (
+                          <Visibility sx={{ color: "white" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "white" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 value={password}
                 onChange={handlePasswordChange}
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{
@@ -381,12 +429,33 @@ export default function SignUp() {
                 fullWidth
                 id="verifyPassword"
                 label="Verify Password"
-                type="password"
+                type={showVerifyPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowVerifyPassword}
+                        onMouseDown={handleMouseDownVerifyPassword}
+                        edge="end"
+                        color="white"
+                      >
+                        {showVerifyPassword ? (
+                          <Visibility sx={{ color: "white" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "white" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 value={verifyPassword}
                 onChange={handleVerifyPasswordChange}
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
+
                   },
                 }}
                 sx={{

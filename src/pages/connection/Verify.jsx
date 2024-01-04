@@ -10,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import useUserEmail from "../../atom/emailAtom";
+import useLoading from "../../atom/loading";
+
 
 const theme = createTheme();
 
@@ -23,6 +25,8 @@ export default function Verify() {
   const [email, setEmail] = useUserEmail();
   const [isCodeValid, setIsCodeValid] = useState(true);
   const [codeError, setCodeError] = useState("");
+  const [loading, setLoading] = useLoading()
+
 
   const handleCodeChange = (event) => {
     const value = event.target.value;
@@ -37,12 +41,15 @@ export default function Verify() {
     event.preventDefault();
 
     try {
+      setLoading(true)
+
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/verifyemail",
         { code: code, email: email }
       );
 
       if (response.status === 200) {
+        setLoading(false)
         navigateVerify("/sign-in");
       }
     } catch (error) {
@@ -51,6 +58,7 @@ export default function Verify() {
         setCodeError(error.response.data)
 
       }
+      setLoading(false)
       console.error(error);
     }
   };

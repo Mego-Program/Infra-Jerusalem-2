@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -8,13 +7,17 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import useCameFromNavigation from "../../atom/userAtom.js";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+
+
 const theme = createTheme();
 
 const textFieldStyles = {
@@ -129,6 +132,7 @@ export default function SignIn() {
   const [token, setToken] = useState(null);
   const navigateRootLayout = useNavigate();
 
+
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -138,6 +142,12 @@ export default function SignIn() {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
   const [messageError, setMessageError] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
@@ -170,6 +180,7 @@ export default function SignIn() {
     }
     const data = new FormData(event.currentTarget);
     try {
+
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/signin",
         {
@@ -181,7 +192,6 @@ export default function SignIn() {
         console.log(response);
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
-
         navigateRootLayout("/root-layout");
       }
     } catch (error) {
@@ -191,6 +201,7 @@ export default function SignIn() {
         setIsPasswordValid(false);
       }
       console.error(error);
+
     }
   };
 
@@ -264,6 +275,7 @@ export default function SignIn() {
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
                   },
                 }}
                 sx={{
@@ -280,12 +292,32 @@ export default function SignIn() {
                 fullWidth
                 id="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        color="white"
+                      >
+                        {showPassword ? (
+                          <Visibility sx={{ color: "white" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "white" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 value={password}
                 onChange={handlePasswordChange}
                 inputProps={{
                   style: {
                     color: "white",
+                    textAlign: "left",
                   },
                 }}
                 sx={{
