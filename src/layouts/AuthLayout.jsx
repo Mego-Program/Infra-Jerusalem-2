@@ -3,14 +3,18 @@ import { color } from "@mui/system";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-// Functional component for the authentication layout
+import useLoading from "../atom/loading";
+
+
 export default function AuthLayout() {
   const navigateRootLayout = useNavigate();
+  const [loading, setLoading] = useLoading()
 
   const responseMessage = async (response) => {
     let googleToken = response.credential;
 
     try {
+      setLoading(true)
       
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/googlelogin",
@@ -26,15 +30,18 @@ export default function AuthLayout() {
         const token = response.data.token;
 
         localStorage.setItem("token", token);
+        setLoading(false)
         navigateRootLayout("/root-layout");
       }
     } catch (error) {
       console.log(error);
     }
+    
   };
 
   const errorMessage = (error) => {
     console.log(error);
+    setLoading(false)
   };
   return (
     <Box
@@ -47,7 +54,6 @@ export default function AuthLayout() {
         minWidth: "100vh",
       }}
     >
-      {/* Left side content */}
       <Box
         sx={{
           pt: "2%",
@@ -104,7 +110,6 @@ export default function AuthLayout() {
           CodeClique: Navigating Your Week with Seamless Productivity{" "}
         </h1>
         <Typography>
-          {/* Placeholder text */}
           Dive into a world of organized efficiency with CodeClique, your go-to
           platform for streamlining tasks and conquering your weekly agenda.
           <br />
@@ -123,7 +128,6 @@ export default function AuthLayout() {
         </Typography>
       </Box>
 
-      {/* Right side content - Sign In and Sign Up links */}
       <Box
         sx={{
           p: "0px",
