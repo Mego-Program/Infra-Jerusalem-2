@@ -23,6 +23,7 @@ import Verify from "./pages/connection/Verify";
 import ForgotPassword from "./pages/connection/ForgotPassword";
 import NewPassword from "./pages/connection/NewPassword";
 import VerifyEmail from "./pages/connection/VerifyEmail";
+import useLoading from "./atom/loading";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="new-password" element={<NewPassword />} />
       <Route path="verify-email" element={<VerifyEmail />} />
+      <Route path="refresh" element={<Refresh />} />
 
 
       <Route path="root-layout" element={<RootLayout />}>
@@ -68,7 +70,10 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+
+  const [loading, setLoading] = useLoading()
+
+  return loading ? <Refresh /> : <RouterProvider router={router} />;
 }
 
 export default App;

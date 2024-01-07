@@ -93,7 +93,6 @@ const Dashboard = () => {
   // Convert filtered entries back into an object
   const filteredSprints = Object.fromEntries(filteredEntries);
 
-
   const keysArray = Object.keys(filteredSprints);
   const valuesArray = Object.values(filteredSprints);
 
@@ -101,7 +100,7 @@ const Dashboard = () => {
     labels: keysArray,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Days left",
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
@@ -129,21 +128,22 @@ const Dashboard = () => {
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
+          mt:"10px"
         }}
       >
         <Typography
           variant="h6"
           mb={2}
-          sx={{ color: "#F6C927", bgcolor: "#21213E" }}
+          sx={{ color: "white", bgcolor: "#21213E" }}
         >
-          Projects status chart
+          Personal Tasks status chart
         </Typography>
         <Typography
           variant="h6"
           mb={2}
-          sx={{ pl: "50px", color: "#F6C927", bgcolor: "#21213E" }}
+          sx={{  color: "white", bgcolor: "#21213E" }}
         >
-          Project urgency chart in days
+          Sprints Time Remaining chart
         </Typography>
       </Box>
       <Paper

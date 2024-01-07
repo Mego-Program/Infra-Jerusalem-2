@@ -14,7 +14,6 @@ import Avatar from "@mui/material/Avatar";
 import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
 import MyProfile from "./MyProfile";
-import useUserDetails from "../atom/userAtom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Typography } from "@mui/material";
 
@@ -31,7 +30,8 @@ export default function AccountMenu() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
-    navigeteSignIn("/sign-in");
+    navigeteSignIn('/')
+
   };
 
   const handleClose = () => {
