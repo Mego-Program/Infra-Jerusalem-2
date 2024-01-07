@@ -218,7 +218,7 @@ export default function SignUp() {
 
   return (
     <Box
-      sx={{ p: "1px", bgcolor: "#121231", minHeight: "100vh", color: "white" }}
+      sx={{ p: "1px", bgcolor: "#121231", minHeight: "99.8vh", color: "white" }}
     >
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
