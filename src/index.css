@@ -16,3 +16,6 @@ html {
   background-color: red !important;
   color: white !important;
 }
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  background-color: transparent  !important;
+}
