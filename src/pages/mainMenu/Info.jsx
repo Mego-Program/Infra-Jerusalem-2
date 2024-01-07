@@ -20,8 +20,8 @@ export default function Info() {
       }}
     >
       <Box sx={{padding:"20px"}}>
-        <Typography variant="h5" sx={{pb:"15px", color:"#F6C927"}}>
-          CodeClique is a dedicated web-based solution <br /> for project and task
+        <Typography variant="h5" sx={{pb:"15px", }}>
+          <h2 style={{color:"#F6C927", display:"inline"}}>CodeClique</h2> is a dedicated web-based solution <br /> for project and task
           management tailored for businesses and organizations.
         </Typography>
         <Typography variant="h6">With CodeClique, companies can:</Typography>

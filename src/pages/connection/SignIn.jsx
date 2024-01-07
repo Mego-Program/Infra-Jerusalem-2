@@ -195,7 +195,7 @@ export default function SignIn() {
         navigateRootLayout("/root-layout");
       }
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response.status !== 200) {
         setMessageError("Invalid sign in credentials");
         setIsEmailValid(false);
         setIsPasswordValid(false);
