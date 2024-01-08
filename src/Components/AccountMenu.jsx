@@ -3,15 +3,12 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Avatar from "@mui/material/Avatar";
-import BadgeAvatars from "./BadgeAvatars";
 import { useNavigate } from "react-router-dom";
 import MyProfile from "./MyProfile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -31,6 +28,11 @@ export default function AccountMenu() {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
     navigeteSignIn('/')
+
+  };
+
+  const handleSettings = () => {
+    navigeteSignIn('settings')
 
   };
 
@@ -151,7 +153,7 @@ export default function AccountMenu() {
           <Typography sx={{ml: "14.5px"}}> Profile</Typography>
         </MenuItem>
         <MenuItem
-          onClick={handleClose}
+          onClick={handleSettings}
           sx={{
             "&:hover": {
               backgroundColor: "#21213E",
