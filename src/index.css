@@ -9,8 +9,7 @@ body{
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
-  background-color: transparent  !important;
-}
-.MuiPaper-root .MuiPaper-elevation .MuiPaper-rounded .MuiPaper-elevation24 .MuiDialog-paper .MuiDialog-paperScrollPaper .MuiDialog-paperWidthSm .css-uhb5lp{
-  background-color: transparent  !important;
+  /* background-color: transparent  !important; */
+  /* margin: 0 !important; */
+  border-radius: 20px !important;
 }
