@@ -8,15 +8,13 @@ body{
   background-color: #21213E;
 }
 
+.customNavLink.active {
+  background-color: red !important;
+  color: white !important;
+}
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
   background-color: transparent  !important;
 }
-.profile{
+.MuiPaper-root .MuiPaper-elevation .MuiPaper-rounded .MuiPaper-elevation24 .MuiDialog-paper .MuiDialog-paperScrollPaper .MuiDialog-paperWidthSm .css-uhb5lp{
   background-color: transparent  !important;
-
 }
-
-.css-uhb5lp{
-  background-color: #21213E;
-}
-
