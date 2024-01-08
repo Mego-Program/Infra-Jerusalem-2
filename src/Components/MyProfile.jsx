@@ -167,7 +167,7 @@ const MyProfile = (props) => {
   }, []);
 
   return (
-    <Dialog onClose={handleClose} open={open} sx={{}}>
+    <Dialog className="profile" onClose={handleClose} open={open} sx={{}}>
       <div
         className="div-1"
         style={{
