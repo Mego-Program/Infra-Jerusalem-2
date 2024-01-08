@@ -1,16 +1,24 @@
 html {
   overflow-x: hidden;
-  background-color: #21213E;
-
-  
+  background-color: #21213e;
 }
-body{
-  background-color: #21213E;
+body {
+  background-color: #21213e;
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
-  background-color: transparent  !important;
+  background-color: #21213e !important;
   margin: 0 !important;
   border-radius: 20px !important;
+}
+.css-uhb5lp {
+  background-color: #21213e !important;
+  color: white !important;
+
+}
+.css-1x5jdmq{
+  color: white !important;
+  background-color: #3a3a62 !important;
+
 }
 
