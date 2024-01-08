@@ -50,7 +50,7 @@ export default function AuthLayout() {
         color: "white",
         bgcolor: "#21213E",
         display: "flex",
-        minHeight: "100vh",
+        height: "99.8vh",
         minWidth: "100vh",
       }}
     >
