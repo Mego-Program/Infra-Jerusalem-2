@@ -2,6 +2,7 @@ html {
   overflow-x: hidden;
   background-color: #21213e;
 }
+
 body {
   background-color: #21213e;
 }
@@ -11,16 +12,14 @@ body {
   margin: 0 !important;
   border-radius: 15px !important;
 }
+
 .css-uhb5lp {
-  background-color: #21213e !important;
-  color: white !important;
+  background-color: white !important;
   border-radius: 15px !important;
-
-
 }
+
 .css-1x5jdmq{
-  color: white !important;
-  background-color: #3a3a62 !important;
+  background-color: white !important;
 
 }
 
