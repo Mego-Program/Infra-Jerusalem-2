@@ -103,7 +103,8 @@ export default function Verify() {
               </svg>
             </Box>
             <Typography component="h1" variant="h5">
-              Verify Code
+              Verify Email
+
             </Typography>
             <Box
               component="form"

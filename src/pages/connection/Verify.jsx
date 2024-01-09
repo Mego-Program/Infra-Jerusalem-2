@@ -12,12 +12,10 @@ import { useNavigate } from "react-router-dom";
 import useUserEmail from "../../atom/emailAtom";
 import useLoading from "../../atom/loading";
 
-
 const theme = createTheme();
 
 const isLength = (value) => value.length === 5;
 const validateCode = (value) => isLength(value);
-
 
 export default function Verify() {
   const navigateVerify = useNavigate();
@@ -25,8 +23,7 @@ export default function Verify() {
   const [email, setEmail] = useUserEmail();
   const [isCodeValid, setIsCodeValid] = useState(true);
   const [codeError, setCodeError] = useState("");
-  const [loading, setLoading] = useLoading()
-
+  const [loading, setLoading] = useLoading();
 
   const handleCodeChange = (event) => {
     const value = event.target.value;
@@ -35,13 +32,11 @@ export default function Verify() {
     setCodeError(validateCode(value) ? "" : "Code must have 5 digits");
   };
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      setLoading(true)
+      setLoading(true);
 
       const response = await axios.post(
         "https://infra-jerusalem-2-server.vercel.app/verifyemail",
@@ -49,16 +44,15 @@ export default function Verify() {
       );
 
       if (response.status === 200) {
-        setLoading(false)
+        setLoading(false);
         navigateVerify("/sign-in");
       }
     } catch (error) {
-      if(error.response.status === 401 || error.response.status === 500){
-        setIsCodeValid(false)
-        setCodeError(error.response.data)
-
+      if (error.response.status === 401 || error.response.status === 500) {
+        setIsCodeValid(false);
+        setCodeError(error.response.data);
       }
-      setLoading(false)
+      setLoading(false);
       console.error(error);
     }
   };
@@ -111,13 +105,13 @@ export default function Verify() {
               </svg>
             </Box>
             <Typography component="h1" variant="h5">
-              Verify Code
+              Verify Email
             </Typography>
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3, width:"80%"}}
+              sx={{ mt: 3, width: "80%" }}
             >
               <TextField
                 autoComplete=""
@@ -135,10 +129,8 @@ export default function Verify() {
                   },
                 }}
                 sx={{
-                  mt:"1",
-                  ...(isCodeValid
-                    ? textFieldStyles
-                    : invalidTextFieldStyles),
+                  mt: "1",
+                  ...(isCodeValid ? textFieldStyles : invalidTextFieldStyles),
                 }}
               />
               <Box sx={{ color: "red", fontSize: "small", height: "28px" }}>
@@ -166,8 +158,8 @@ export default function Verify() {
                 Send
               </Button>
               <Grid container>
-                <Grid item="true" sx={{pt:"10px"}}>
-                  <NavLink to="/sign-up" style={{ color: "#F6C927",}}>
+                <Grid item="true" sx={{ pt: "10px" }}>
+                  <NavLink to="/sign-up" style={{ color: "#F6C927" }}>
                     {"Sign Up"}
                   </NavLink>
                 </Grid>
