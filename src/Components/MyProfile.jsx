@@ -175,7 +175,7 @@ const MyProfile = (props) => {
           height: "100%",
           backgroundColor: "#21213E",
           border: "2px solid #F6C927",
-          borderRadius: "20px",
+          borderRadius: "15px",
           color: "white",
           margin: "0",
           padding: "0 20px",
